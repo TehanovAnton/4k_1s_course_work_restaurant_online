@@ -31,6 +31,10 @@ group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
 
   gem 'rspec-rails', '~> 6.0.0'
+
+  gem 'pry', '~> 0.14.1'
+  gem 'pry-nav'
+  gem 'pry-remote'
 end
 
 group :development do
