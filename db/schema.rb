@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_11_02_132503) do
+ActiveRecord::Schema.define(version: 2022_11_02_133038) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -50,6 +50,17 @@ ActiveRecord::Schema.define(version: 2022_11_02_132503) do
     t.index ["user_id"], name: "index_orders_on_user_id"
   end
 
+  create_table "reservations", force: :cascade do |t|
+    t.datetime "start_at"
+    t.datetime "end_at"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "table_id"
+    t.bigint "order_id"
+    t.index ["order_id"], name: "index_reservations_on_order_id"
+    t.index ["table_id"], name: "index_reservations_on_table_id"
+  end
+
   create_table "restaurants", force: :cascade do |t|
     t.string "name", null: false
     t.string "email", null: false
@@ -79,5 +90,7 @@ ActiveRecord::Schema.define(version: 2022_11_02_132503) do
   add_foreign_key "messages", "users"
   add_foreign_key "orders", "restaurants"
   add_foreign_key "orders", "users"
+  add_foreign_key "reservations", "orders"
+  add_foreign_key "reservations", "tables"
   add_foreign_key "tables", "restaurants"
 end
