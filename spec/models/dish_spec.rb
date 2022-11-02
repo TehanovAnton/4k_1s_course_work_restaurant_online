@@ -1,8 +1,8 @@
 require 'rails_helper'
 
-RSpec.describe Table, type: :model do
+RSpec.describe Dish, type: :model do
   describe '#orders' do
-    context 'when table has orders' do
+    context 'when dish has orders' do
 
       include_examples "model_relation", 'orders' do        
         let(:restaurant) do 
@@ -11,17 +11,18 @@ RSpec.describe Table, type: :model do
 
         let(:user) do
           User.create(name: 'obi van', email: 'kenoby@gmail.com')
-        end
+        end 
 
-        let(:order) do
-          Order.create(user_id: user.id, restaurant_id: restaurant.id)
+        let(:menu) do
+          Menu.create(name: 'italic', restaurant_id: restaurant.id)
         end
 
         let(:model) do
-          table = Table.create(number: 1, restaurant_id: restaurant.id)
-          order.tables << table
+          order = Order.create(user_id: user.id, restaurant_id: restaurant.id)
+          dish = Dish.create(name: 'pasta', menu_id: menu.id)
+          order.dishes << dish
 
-          return table
+          return dish
         end
       end
     end
