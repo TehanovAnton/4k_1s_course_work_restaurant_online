@@ -38,8 +38,10 @@ group :development do
   # Can be configured to work on production as well see: https://github.com/MiniProfiler/rack-mini-profiler/blob/master/README.md
   gem 'rack-mini-profiler', '~> 2.0'
   gem 'listen', '~> 3.3'
+  gem "solargraph", "~> 0.47.2"
 end
 
 gem "net-smtp", "~> 0.3.3"
 
 gem "pg", "~> 1.4"
+
