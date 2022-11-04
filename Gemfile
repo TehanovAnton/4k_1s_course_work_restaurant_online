@@ -52,3 +52,5 @@ gem "net-smtp", "~> 0.3.3"
 
 gem "pg", "~> 1.4"
 
+
+gem "rack-cors", "~> 1.1.1"
