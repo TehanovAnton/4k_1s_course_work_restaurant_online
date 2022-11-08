@@ -60,3 +60,5 @@ gem "devise", "~> 4.8"
 gem "devise_token_auth", "~> 1.2"
 
 gem "omniauth", "~> 2.1"
+
+gem 'pundit', '~> 2.2'
