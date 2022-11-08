@@ -1,17 +1,16 @@
 class UsersController < ApplicationController
+  before_action :authenticate_user!
+
   def show
     render json: User.find(params[:id])
   end
 
-  def create
-    binding.pry
-    render json: User.create(user_params)
-  end
+  def update
+    authorize current_user
 
-  def edit
-  end
+    return render json: current_user if current_user.update(user_params)
 
-  def destroy
+    render json: { error: 'wrong params' }
   end
 
   private
