@@ -3,5 +3,5 @@ Rails.application.routes.draw do
     registrations: 'overrides/registrations'
   }
 
-  resources :users, :restaurants
+  resources :users, :restaurants, :menus
 end
