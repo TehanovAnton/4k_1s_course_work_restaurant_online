@@ -1,6 +1,5 @@
 class UserPolicy < ApplicationPolicy
   def update?
-    binding.pry
-    user.email != 'tehanovanton@gmail.com'
+    true
   end
 end
