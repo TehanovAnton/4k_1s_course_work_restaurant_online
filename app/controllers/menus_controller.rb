@@ -17,7 +17,7 @@ class MenusController < ApplicationController
   end
 
   def update
-    authorize Menu
+    authorize @menu
     response = { error: 'wrong menu params' }
 
     response = @menu if @menu.update(menu_params)
@@ -26,7 +26,7 @@ class MenusController < ApplicationController
   end
 
   def destroy
-    authorize Menu
+    authorize @menu
     response = @menu
 
     response = { error: 'wrong menu params' } unless @menu.destroy
