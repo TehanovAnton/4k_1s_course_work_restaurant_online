@@ -16,7 +16,7 @@ class RestaurantsController < ApplicationController
   end
 
   def update
-    authorize Restaurant
+    authorize @restaurant
     response = { error: 'wrong restaurant params' }
 
     response = @restaurant if @restaurant.update(restaurant_params)
@@ -25,7 +25,7 @@ class RestaurantsController < ApplicationController
   end
 
   def destroy
-    authorize Restaurant
+    authorize @restaurant
     response = @restaurant
 
     response = { error: 'wrong restaurant params' } unless @restaurant.destroy
