@@ -10,7 +10,7 @@ RSpec.describe User, type: :model do
         end
 
         let(:model) do
-          user = User.create(name: 'obi van', email: 'kenoby@gmail.com')
+          user = User.create(name: 'obi van', email: 'kenoby@gmail.com', password: 'ewqqwe')
           oreder = Order.create(user_id: user.id, restaurant_id: restaurant.id)
 
           return user
@@ -28,7 +28,7 @@ RSpec.describe User, type: :model do
         end
 
         let(:model) do
-          user = User.create(name: 'obi van', email: 'kenoby@gmail.com')
+          user = User.create(name: 'obi van', email: 'kenoby@gmail.com', password: 'ewqqwe')
           message = Message.create(user_id: user.id, restaurant_id: restaurant.id, text: 'any')
 
           return user

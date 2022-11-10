@@ -10,7 +10,7 @@ RSpec.describe Dish, type: :model do
         end
 
         let(:user) do
-          User.create(name: 'obi van', email: 'kenoby@gmail.com')
+          User.create(name: 'obi van', email: 'kenoby@gmail.com', password: 'ewqqwe')
         end 
 
         let(:menu) do

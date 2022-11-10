@@ -52,3 +52,13 @@ gem "net-smtp", "~> 0.3.3"
 
 gem "pg", "~> 1.4"
 
+
+gem "rack-cors", "~> 1.1.1"
+
+gem "devise", "~> 4.8"
+
+gem "devise_token_auth", "~> 1.2"
+
+gem "omniauth", "~> 2.1"
+
+gem 'pundit', '~> 2.2'
