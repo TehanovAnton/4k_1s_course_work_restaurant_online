@@ -18,7 +18,7 @@ class UsersController < ApplicationController
   end
 
   def update
-    authorize User
+    authorize @user, policy_class: UserPolicy
     response = { error: 'wrong user params' }
 
     response = @user if @user.update(user_params)
