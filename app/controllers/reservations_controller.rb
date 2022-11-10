@@ -9,25 +9,22 @@ class ReservationsController < ApplicationController
   end
 
   def create
-    authorize Reservation
-    # create resp always true
     return render json: Reservation.create(reservation_params)
 
     render json: { error: 'wrong reservation params' }
   end
 
   def update
-    authorize Reservation
+    authorize @reservation
     response = { error: 'wrong reservation params' }
 
-    binding.pry
     response = @reservation if @reservation.update(reservation_params)
 
     render json: response
   end
 
   def destroy
-    authorize Reservation
+    authorize @reservation
     response = @reservation
 
     response = { error: 'wrong reservation params' } unless @reservation.destroy

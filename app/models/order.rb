@@ -9,6 +9,7 @@ class Order < ApplicationRecord
   belongs_to :user
 
   accepts_nested_attributes_for :reservations
-  # when orders would have state allow_destroy: true
   accepts_nested_attributes_for :orders_dishes
+
+  delegate :admins, to: :restaurant
 end

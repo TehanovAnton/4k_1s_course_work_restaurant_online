@@ -1,17 +1,9 @@
 class ReservationPolicy < ApplicationPolicy
-  def show?
-    true
-  end
-
-  def create?
-    true
-  end
-
   def update?
-    true
+    user.is_a?(SuperAdmin) || record.admins.include?(user) || user.orders.include?(record)
   end
-
+  
   def destroy?
-    true
+    user.is_a?(SuperAdmin) || record.admins.include?(user) || user.orders.include?(record)
   end
 end

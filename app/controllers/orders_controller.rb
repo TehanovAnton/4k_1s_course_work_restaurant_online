@@ -9,14 +9,13 @@ class OrdersController < ApplicationController
   end
 
   def create
-    authorize Order
     return render json: Order.create(order_params)
 
     render json: { error: 'wrong order params' }
   end
 
   def update
-    authorize Order
+    authorize @order
     response = { error: 'wrong order params' }
 
     response = @order if @order.update(order_params)
@@ -25,7 +24,7 @@ class OrdersController < ApplicationController
   end
 
   def destroy
-    authorize Order
+    authorize @order
     response = @order
 
     response = { error: 'wrong order params' } unless @order.destroy
