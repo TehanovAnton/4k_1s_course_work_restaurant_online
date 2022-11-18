@@ -22,6 +22,7 @@
 !/tmp/pids/
 !/tmp/pids/.keep
 /scripts
+/app/front
 
 # Ignore uploaded files in development.
 /storage/*
@@ -40,3 +41,6 @@
 yarn-debug.log*
 .yarn-integrity
 .ruby-version
+
+# Ignore application configuration
+/config/application.yml

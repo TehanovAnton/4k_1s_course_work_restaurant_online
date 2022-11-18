@@ -5,8 +5,8 @@
 #   gem 'sqlite3'
 #
 default: &default
-  username: restaurant_online
-  password: ewqqwe
+  username: <%= ENV["DB_USER"] %>
+  password: <%= ENV["DB_USER_PASSWORD"] %>
   adapter: postgresql
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   timeout: 5000
