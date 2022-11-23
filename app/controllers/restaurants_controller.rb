@@ -1,7 +1,14 @@
 class RestaurantsController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_restaurant, only: %i[update destroy show]
 
-  def show    
+  def index
+    @restaurants = Restaurant.all
+
+    render json: @restaurants
+  end
+
+  def show
     return render json: @restaurant
 
     render json: { error: 'wrong restaurant params' }
