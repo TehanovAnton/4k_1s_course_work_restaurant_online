@@ -1,7 +1,14 @@
 class RestaurantsController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_restaurant, only: %i[update destroy show]
 
-  def show    
+  def index
+    @restaurants = Restaurant.includes(:menus).all
+
+    render json: RestaurantBlueprint.render(@restaurants)
+  end
+
+  def show
     return render json: @restaurant
 
     render json: { error: 'wrong restaurant params' }
@@ -9,14 +16,14 @@ class RestaurantsController < ApplicationController
 
   def create
     authorize Restaurant
-    
+
     return render json: Restaurant.create(restaurant_params)
 
     render json: { error: 'wrong restaurant params' }
   end
 
   def update
-    authorize Restaurant
+    authorize @restaurant
     response = { error: 'wrong restaurant params' }
 
     response = @restaurant if @restaurant.update(restaurant_params)
@@ -25,7 +32,7 @@ class RestaurantsController < ApplicationController
   end
 
   def destroy
-    authorize Restaurant
+    authorize @restaurant
     response = @restaurant
 
     response = { error: 'wrong restaurant params' } unless @restaurant.destroy

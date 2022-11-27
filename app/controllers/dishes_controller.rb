@@ -17,7 +17,7 @@ class DishesController < ApplicationController
   end
 
   def update
-    authorize Dish
+    authorize @dish
     response = { error: 'wrong dish params' }
 
     response = @dish if @dish.update(dish_params)
@@ -26,7 +26,7 @@ class DishesController < ApplicationController
   end
 
   def destroy
-    authorize Dish
+    authorize @dish
     response = @dish
 
     response = { error: 'wrong dish params' } unless @dish.destroy

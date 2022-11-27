@@ -2,21 +2,26 @@ class OrdersController < ApplicationController
   before_action :authenticate_user!
   before_action :set_order, only: %i[update destroy show]
 
-  def show    
+  def index
+    @orders = current_user.orders
+
+    render 
+  end
+
+  def show
     return render json: @order
 
     render json: { error: 'wrong order params' }
   end
 
   def create
-    authorize Order
     return render json: Order.create(order_params)
 
     render json: { error: 'wrong order params' }
   end
 
   def update
-    authorize Order
+    authorize @order
     response = { error: 'wrong order params' }
 
     response = @order if @order.update(order_params)
@@ -25,7 +30,7 @@ class OrdersController < ApplicationController
   end
 
   def destroy
-    authorize Order
+    authorize @order
     response = @order
 
     response = { error: 'wrong order params' } unless @order.destroy

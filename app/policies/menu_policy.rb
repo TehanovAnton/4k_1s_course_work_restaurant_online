@@ -1,13 +1,13 @@
 class MenuPolicy < ApplicationPolicy
   def create?
-    user.is_a? Admin
+    [SuperAdmin, Admin].include?(user.class) || record.admins.include?(user)
   end
 
   def update?
-    user.is_a? Admin
+    user.is_a?(SuperAdmin) || record.admins.include?(user)
   end
   
   def destroy?
-    user.is_a? Admin
+    user.is_a?(SuperAdmin) || record.admins.include?(user)
   end
 end

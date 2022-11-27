@@ -3,4 +3,6 @@ class Dish < ApplicationRecord
   has_many :orders, through: :orders_dishes
 
   belongs_to :menu
+
+  delegate :admins, to: :menu
 end
