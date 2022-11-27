@@ -2,7 +2,7 @@ class MenusController < ApplicationController
   before_action :authenticate_user!
   before_action :set_menu, only: %i[update destroy show]
 
-  def show    
+  def show
     return render json: @menu
 
     render json: { error: 'wrong menu params' }
