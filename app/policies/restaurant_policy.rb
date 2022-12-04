@@ -9,7 +9,7 @@ class RestaurantPolicy < ApplicationPolicy
   end
 
   def destroy?
-    [SuperAdmin, Admin].include? user.class
+    super_admin? || record.admins.ids.include?(user.id)
   end
 
   private

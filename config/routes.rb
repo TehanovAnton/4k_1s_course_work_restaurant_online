@@ -18,6 +18,7 @@ Rails.application.routes.draw do
 
     member do
       get :can_update, to: 'restaurants#can_update?'
+      get :can_destroy, to: 'restaurants#can_destroy?'
     end
   end
 end

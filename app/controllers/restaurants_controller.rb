@@ -1,7 +1,9 @@
 class RestaurantsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_restaurant, only: %i[update destroy show can_update?]
-  before_action :set_authorizer, only: %i[can_create? can_update?]
+  before_action :set_restaurant, only: %i[update destroy show can_update? can_destroy?]
+  before_action :set_authorizer, only: Authorization::RestaurantsAuthorizationApi::ACTIONS
+
+  include Authorization::RestaurantsAuthorizationApi
 
   def index
     @restaurants = Restaurant.includes(:menus).all
@@ -41,22 +43,7 @@ class RestaurantsController < ApplicationController
     render json: response
   end
 
-  def can_create?
-    render json: @authorizer.create?
-  end
-
-  def can_update?
-    render json: @authorizer.update?
-  end
-
   private
-
-  def set_authorizer
-    auth_obj = Restaurant
-    auth_obj = @restaurant if params[:id]
-
-    @authorizer = RestaurantPolicy.new(current_user, auth_obj)
-  end
 
   def set_restaurant
     @restaurant = Restaurant.find_by(id: params[:id])
