@@ -13,7 +13,11 @@ Rails.application.routes.draw do
     resources :menus
 
     collection do
-      get :can_create, to: 'restaurants#can_create'
+      get :can_create, to: 'restaurants#can_create?'
+    end
+
+    member do
+      get :can_update, to: 'restaurants#can_update?'
     end
   end
 end
