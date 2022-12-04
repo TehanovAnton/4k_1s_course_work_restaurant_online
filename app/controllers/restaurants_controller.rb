@@ -40,6 +40,12 @@ class RestaurantsController < ApplicationController
     render json: response
   end
 
+  def can_create
+    authorizer = RestaurantPolicy.new(current_user, Restaurant)
+
+    render json: authorizer.create?
+  end
+
   private
 
   def set_restaurant
