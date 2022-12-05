@@ -5,7 +5,7 @@ class OrdersController < ApplicationController
   def index
     @orders = current_user.orders
 
-    render 
+    render json: OrderBlueprint.render(@orders)
   end
 
   def show
@@ -48,9 +48,10 @@ class OrdersController < ApplicationController
   end
 
   def order_params
-    order_params = [ 
-      :user_id, 
-      :restaurant_id, 
+    order_params = [
+      :user_id,
+      :restaurant_id,
+      :place_type,
       orders_dishes_attributes: [:id, :dish_id],
       reservations_attributes: [:id, :table_id]
     ]

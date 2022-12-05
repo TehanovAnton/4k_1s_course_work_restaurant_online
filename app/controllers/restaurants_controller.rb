@@ -1,6 +1,9 @@
 class RestaurantsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_restaurant, only: %i[update destroy show]
+  before_action :set_restaurant, only: %i[update destroy show can_update? can_destroy?]
+  before_action :set_authorizer, only: Authorization::RestaurantsAuthorizationApi::ACTIONS
+
+  include Authorization::RestaurantsAuthorizationApi
 
   def index
     @restaurants = Restaurant.includes(:menus).all

@@ -1,4 +1,18 @@
+
 class Order < ApplicationRecord
+  include AASM
+
+  aasm do
+    state :active, initial: true
+    state :inactive
+
+    event :close do
+      transitions from: :active, to: :inactive
+    end
+  end
+
+  enum place_type: %i[inside outside]
+
   has_many :orders_dishes, dependent: :destroy
   has_many :dishes, through: :orders_dishes
 

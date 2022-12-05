@@ -66,3 +66,5 @@ gem 'pundit', '~> 2.2'
 gem "figaro"
 
 gem "blueprinter", "~> 0.25.3"
+
+gem "aasm", "~> 5.4"
