@@ -2,6 +2,12 @@ class UsersController < ApplicationController
   before_action :authenticate_user!
   before_action :set_user, only: %i[update destroy show]
 
+  def index
+    @users = policy_scope(User)
+
+    render json: UserBlueprint.render(@users)
+  end
+
   def show
     return render json: UserBlueprint.render(@user)
 

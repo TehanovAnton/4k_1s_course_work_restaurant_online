@@ -21,5 +21,15 @@ class ApplicationPolicy
     private
 
     attr_reader :user, :scope
+
+    def super_admin?
+      user.is_a? SuperAdmin
+    end
+  end
+
+  private
+
+  def super_admin?
+    user.is_a? SuperAdmin
   end
 end
