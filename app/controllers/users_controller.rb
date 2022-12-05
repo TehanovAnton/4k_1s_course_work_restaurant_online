@@ -1,6 +1,9 @@
 class UsersController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_user, only: %i[update destroy show]
+  before_action :set_user, only: %i[update destroy show can_update? can_destroy?]
+  before_action :set_authorizer, only: Authorization::RestaurantsAuthorizationApi::ACTIONS
+
+  include Authorization::UsersAuthorizationApi
 
   def index
     @users = policy_scope(User)
@@ -27,7 +30,7 @@ class UsersController < ApplicationController
     authorize @user, policy_class: UserPolicy
     response = { error: 'wrong user params' }
 
-    response = @user if @user.update(user_params)
+    response = @user if @user.update(update_params)
 
     render json: response
   end
@@ -48,6 +51,10 @@ class UsersController < ApplicationController
 
     update_auth_header
     render json: { error: 'wrong user params' } unless @user
+  end
+
+  def update_params
+    params.require(:user).permit(:name, :email)
   end
 
   def user_params

@@ -8,7 +8,7 @@ class UserPolicy < ApplicationPolicy
   end
 
   def destroy?
-    user.is_a?(SuperAdmin) || user.id == record.id
+    super_admin? || user.id == record.id
   end
 
   class Scope < Scope
