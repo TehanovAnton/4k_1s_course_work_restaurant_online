@@ -1,9 +1,13 @@
 class MenusController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_menu, only: %i[update destroy show]
+  before_action :set_restaurant, only: %i[create can_create?]
+  before_action :set_menu, only: %i[update destroy show can_update? can_destroy?]
+  before_action :set_authorizer, only: Authorization::MenusAuthorizationApi::ACTIONS
+
+  include Authorization::MenusAuthorizationApi
 
   def index
-    restaurant = Restaurant.find(params[:restaurant_id])
+    restaurant = Restaurant.includes(:menus).find(params[:restaurant_id])
 
     render json: MenuBlueprint.render(restaurant.menus)
   end
@@ -41,10 +45,17 @@ class MenusController < ApplicationController
   private
 
   def set_menu
-    @menu = Menu.find_by(id: params[:id])
+    @menu = Menu.includes(:restaurant).find_by(id: params[:id])
 
     update_auth_header
     render json: { error: 'wrong menu params' } unless @menu
+  end
+
+  def set_restaurant
+    @restaurant = Restaurant.find_by(id: params[:restaurant_id])
+
+    update_auth_header
+    render json: { error: 'wrong menu params' } unless @restaurant
   end
 
   def menu_params

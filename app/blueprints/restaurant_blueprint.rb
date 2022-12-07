@@ -4,5 +4,7 @@ class RestaurantBlueprint < Blueprinter::Base
 
   fields :name, :email, :address
 
-  association :menus, blueprint: MenuBlueprint
+  view :normal do
+    association :menus, blueprint: MenuBlueprint
+  end
 end

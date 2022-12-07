@@ -5,4 +5,5 @@ class MenuBlueprint < Blueprinter::Base
   fields :name
 
   association :dishes, blueprint: DishBlueprint
+  association :restaurant, blueprint: RestaurantBlueprint
 end
