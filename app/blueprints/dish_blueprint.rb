@@ -4,7 +4,7 @@ class DishBlueprint < Blueprinter::Base
 
   fields :name
 
-  view :normal do
+  view :with_menus do
     association :menu, blueprint: MenuBlueprint
   end
 end

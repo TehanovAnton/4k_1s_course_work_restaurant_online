@@ -3,7 +3,6 @@ module Authorization::DishesAuthorizationApi
   ACTIONS = %i[can_create? can_update? can_destroy?]
 
   def can_create?
-
     render json: @authorizer.create?
   end
 

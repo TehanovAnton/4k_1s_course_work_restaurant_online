@@ -7,7 +7,7 @@ class DishesController < ApplicationController
   include Authorization::DishesAuthorizationApi
 
   def index
-    render json: MenuBlueprint.render(@menu)
+    render json: DishBlueprint.render(@menu.dishes, view: :with_menus)
   end
 
   def show
@@ -35,8 +35,8 @@ class DishesController < ApplicationController
 
   def destroy
     authorize @dish
-    response = @dish
 
+    response = @dish
     response = { error: 'wrong dish params' } unless @dish.destroy
 
     render json: response
