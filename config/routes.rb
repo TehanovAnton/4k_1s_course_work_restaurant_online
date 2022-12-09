@@ -3,7 +3,7 @@ Rails.application.routes.draw do
     registrations: 'overrides/registrations'
   }
 
-  resources :dishes, :orders, :reservations
+  resources :orders, :reservations
 
   resources :users do
     resources :orders
@@ -19,7 +19,18 @@ Rails.application.routes.draw do
   end
 
   resources :restaurants do
-    resources :menus do
+    resources :menus, shallow: true do
+      resources :dishes, shallow: true do
+        collection do
+          get :can_create, to: 'dishes#can_create?'
+        end
+
+        member do
+          get :can_update, to: 'dishes#can_update?'
+          get :can_destroy, to: 'dishes#can_destroy?'
+        end
+      end
+
       collection do
         get :can_create, to: 'menus#can_create?'
       end

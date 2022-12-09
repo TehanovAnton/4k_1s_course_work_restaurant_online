@@ -9,11 +9,11 @@ class MenusController < ApplicationController
   def index
     restaurant = Restaurant.includes(:menus).find(params[:restaurant_id])
 
-    render json: MenuBlueprint.render(restaurant.menus)
+    render json: MenuBlueprint.render(restaurant.menus, view: :with_dishes)
   end
 
   def show
-    render json: MenuBlueprint.render(@menu)
+    render json: MenuBlueprint.render(@menu, view: :with_dishes)
   end
 
   def create

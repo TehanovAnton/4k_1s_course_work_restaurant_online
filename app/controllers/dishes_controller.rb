@@ -1,8 +1,16 @@
 class DishesController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_dish, only: %i[update destroy show]
+  before_action :set_menu, only: %i[index create can_create?]
+  before_action :set_dish, only: %i[update destroy show can_destroy? can_update?]
+  before_action :set_authorizer, only: Authorization::DishesAuthorizationApi::ACTIONS
 
-  def show    
+  include Authorization::DishesAuthorizationApi
+
+  def index
+    render json: DishBlueprint.render(@menu.dishes, view: :with_menus)
+  end
+
+  def show
     return render json: @dish
 
     render json: { error: 'wrong dish params' }
@@ -10,7 +18,7 @@ class DishesController < ApplicationController
 
   def create
     authorize Dish
-    
+
     return render json: Dish.create(dish_params)
 
     render json: { error: 'wrong dish params' }
@@ -27,8 +35,8 @@ class DishesController < ApplicationController
 
   def destroy
     authorize @dish
-    response = @dish
 
+    response = @dish
     response = { error: 'wrong dish params' } unless @dish.destroy
 
     render json: response
@@ -41,6 +49,13 @@ class DishesController < ApplicationController
 
     update_auth_header
     render json: { error: 'wrong dish params' } unless @dish
+  end
+
+  def set_menu
+    @menu = Menu.includes(:dishes).find(params[:menu_id])
+
+    update_auth_header
+    render json: { error: 'wrong dish params' } unless @menu
   end
 
   def dish_params
