@@ -29,7 +29,7 @@ Rails.application.routes.draw do
           get :can_destroy, to: 'dishes#can_destroy?'
         end
       end
-      
+
       collection do
         get :can_create, to: 'menus#can_create?'
       end

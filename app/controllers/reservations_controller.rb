@@ -9,9 +9,13 @@ class ReservationsController < ApplicationController
   end
 
   def create
-    return render json: Reservation.create(reservation_params)
+    @reservation = Reservation.new(reservation_params)
 
-    render json: { error: 'wrong reservation params' }
+    if @reservation.save
+      return render json: ReservationBlueprint.render(@reservation)
+    end
+
+    render json: { error: @reservation.errors.full_messages }
   end
 
   def update
@@ -42,18 +46,6 @@ class ReservationsController < ApplicationController
   end
 
   def reservation_params
-    reservation_params = [
-      :table_id,
-      :place_type,
-      order_attributes: [
-        :restaurant_id,
-        :user_id,
-        orders_dishes_attributes: [
-          :dish_id
-        ]
-      ]
-    ]
-
-    params.require(:reservation).permit(reservation_params)
+    params.require(:reservation).permit(Reservation::PARAMS)
   end
 end
