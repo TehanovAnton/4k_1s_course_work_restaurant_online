@@ -9,13 +9,13 @@ class OrdersController < ApplicationController
   end
 
   def show
-    return render json: @order
+    return render json: OrderBlueprint.render(@order)
 
     render json: { error: 'wrong order params' }
   end
 
   def create
-    return render json: Order.create(order_params)
+    return render json: OrderBlueprint.render(@order)
 
     render json: { error: 'wrong order params' }
   end
@@ -52,8 +52,8 @@ class OrdersController < ApplicationController
       :user_id,
       :restaurant_id,
       :place_type,
-      orders_dishes_attributes: [:id, :dish_id],
-      reservations_attributes: [:id, :table_id]
+      { orders_dishes_attributes: %i[id dish_id] },
+      { reservations_attributes: %i[id table_id start_at end_at] }
     ]
 
     params.require(:order).permit(order_params)
