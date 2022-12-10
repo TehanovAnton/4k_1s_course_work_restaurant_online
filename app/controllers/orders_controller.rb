@@ -15,9 +15,13 @@ class OrdersController < ApplicationController
   end
 
   def create
-    return render json: OrderBlueprint.render(@order)
+    @order = Order.new(order_params)
 
-    render json: { error: 'wrong order params' }
+    if @order.save
+      return render json: OrderBlueprint.render(@order)
+    end
+
+    render json: { error: @order.errors.full_messages }
   end
 
   def update

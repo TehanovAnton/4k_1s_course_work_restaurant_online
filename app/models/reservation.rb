@@ -1,5 +1,5 @@
 class Reservation < ApplicationRecord
-  belongs_to :table
+  belongs_to :table, optional: true
   belongs_to :order
 
   accepts_nested_attributes_for :order
