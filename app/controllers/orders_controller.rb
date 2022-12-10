@@ -52,14 +52,6 @@ class OrdersController < ApplicationController
   end
 
   def order_params
-    order_params = [
-      :user_id,
-      :restaurant_id,
-      :place_type,
-      { orders_dishes_attributes: %i[id dish_id] },
-      { reservations_attributes: %i[id table_id start_at end_at] }
-    ]
-
-    params.require(:order).permit(order_params)
+    params.require(:order).permit(Order::PARAMS)
   end
 end

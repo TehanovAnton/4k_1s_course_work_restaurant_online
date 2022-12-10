@@ -1,5 +1,12 @@
 
 class Order < ApplicationRecord
+  PARAMS = [
+    :user_id,
+    :restaurant_id,
+    { orders_dishes_attributes: %i[id dish_id] },
+    { reservations_attributes: %i[id table_id start_at end_at place_type] }
+  ]
+
   include AASM
 
   aasm do
@@ -10,8 +17,6 @@ class Order < ApplicationRecord
       transitions from: :active, to: :inactive
     end
   end
-
-  enum place_type: %i[inside outside]
 
   has_many :orders_dishes, dependent: :destroy
   has_many :dishes, through: :orders_dishes

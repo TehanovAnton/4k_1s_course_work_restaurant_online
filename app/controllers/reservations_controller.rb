@@ -42,8 +42,9 @@ class ReservationsController < ApplicationController
   end
 
   def reservation_params
-    reservation_params = [ 
-      :table_id, 
+    reservation_params = [
+      :table_id,
+      :place_type,
       order_attributes: [
         :restaurant_id,
         :user_id,
