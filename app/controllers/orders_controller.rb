@@ -1,10 +1,19 @@
 class OrdersController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_order, only: %i[update destroy show]
+  before_action :set_order, only: %i[update destroy show can_update? can_update? can_destroy?]
+  before_action :set_user, only: %i[index]
+  before_action :set_authorizer, only: Authorization::OrdersAuthorizationApi::ACTIONS
+
+  include Authorization::OrdersAuthorizationApi
 
   def index
-    @orders = policy_scope(Order)
+    @scope = if current_user.is_a?(SuperAdmin)
+      Order.where(user_id: params[:user_id])
+    else
+      current_user.orders
+    end
 
+    @orders = policy_scope(@scope)
     render json: OrderBlueprint.render(@orders)
   end
 
@@ -46,6 +55,13 @@ class OrdersController < ApplicationController
   end
 
   private
+
+  def set_user
+    @user = User.find_by(id: params[:user_id])
+
+    update_auth_header
+    render json: { error: 'wrong action params' } unless @user
+  end
 
   def set_order
     @order = Order.find_by(id: params[:id])

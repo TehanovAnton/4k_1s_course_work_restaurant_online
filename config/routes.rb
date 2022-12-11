@@ -4,7 +4,19 @@ Rails.application.routes.draw do
   }
 
   resources :users, shallow: true do
-    resources  :orders, :reservations
+    resources :orders do
+      collection do
+        get :can_create, to: 'orders#can_create?'
+        get :can_index, to: 'orders#can_index?'
+      end
+
+      member do
+        get :can_update, to: 'orders#can_update?'
+        get :can_destroy, to: 'orders#can_destroy?'
+      end
+    end
+
+    resources :reservations
 
     collection do
       get :can_create, to: 'users#can_create?'
