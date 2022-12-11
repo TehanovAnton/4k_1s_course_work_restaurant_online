@@ -3,12 +3,14 @@ class OrdersController < ApplicationController
   before_action :set_order, only: %i[update destroy show]
 
   def index
-    @orders = current_user.orders
+    @orders = policy_scope(Order)
 
     render json: OrderBlueprint.render(@orders)
   end
 
   def show
+    authorize @order
+
     return render json: OrderBlueprint.render(@order)
 
     render json: { error: 'wrong order params' }
@@ -36,8 +38,8 @@ class OrdersController < ApplicationController
 
   def destroy
     authorize @order
-    response = @order
 
+    response = @order
     response = { error: 'wrong order params' } unless @order.destroy
 
     render json: response
