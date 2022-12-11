@@ -9,24 +9,29 @@ class OrdersController < ApplicationController
   end
 
   def show
-    return render json: @order
+    return render json: OrderBlueprint.render(@order)
 
     render json: { error: 'wrong order params' }
   end
 
   def create
-    return render json: Order.create(order_params)
+    @order = Order.new(order_params)
 
-    render json: { error: 'wrong order params' }
+    if @order.save
+      return render json: OrderBlueprint.render(@order)
+    end
+
+    render json: { error: @order.errors.full_messages }
   end
 
   def update
     authorize @order
-    response = { error: 'wrong order params' }
 
-    response = @order if @order.update(order_params)
+    if @order.update(order_params)
+      return render json: OrderBlueprint.render(@order)
+    end
 
-    render json: response
+    render json: @order.errors.full_messages
   end
 
   def destroy
@@ -48,14 +53,6 @@ class OrdersController < ApplicationController
   end
 
   def order_params
-    order_params = [
-      :user_id,
-      :restaurant_id,
-      :place_type,
-      orders_dishes_attributes: [:id, :dish_id],
-      reservations_attributes: [:id, :table_id]
-    ]
-
-    params.require(:order).permit(order_params)
+    params.require(:order).permit(Order::PARAMS)
   end
 end
