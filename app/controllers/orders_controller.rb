@@ -26,11 +26,12 @@ class OrdersController < ApplicationController
 
   def update
     authorize @order
-    response = { error: 'wrong order params' }
 
-    response = @order if @order.update(order_params)
+    if @order.update(order_params)
+      return render json: OrderBlueprint.render(@order)
+    end
 
-    render json: response
+    render json: @order.errors.full_messages
   end
 
   def destroy
