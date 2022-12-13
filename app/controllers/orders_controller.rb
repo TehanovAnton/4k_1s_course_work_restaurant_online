@@ -1,7 +1,7 @@
 class OrdersController < ApplicationController
   before_action :authenticate_user!
   before_action :set_order, only: %i[update destroy show can_update? can_update? can_destroy?]
-  before_action :set_user, only: %i[index]
+  before_action :set_user, only: %i[index create can_create?]
   before_action :set_authorizer, only: Authorization::OrdersAuthorizationApi::ACTIONS
 
   include Authorization::OrdersAuthorizationApi
@@ -37,8 +37,9 @@ class OrdersController < ApplicationController
 
   def update
     authorize @order
-
-    if @order.update(order_params)
+    if Order.new(order_params).valid?
+      @order.dishes.delete_all
+      @order.update(order_params)
       return render json: OrderBlueprint.render(@order)
     end
 

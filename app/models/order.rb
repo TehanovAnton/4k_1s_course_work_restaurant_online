@@ -24,6 +24,8 @@ class Order < ApplicationRecord
   has_many :reservations, dependent: :destroy
   has_many :tables, through: :reservations
 
+  has_many :menus, through: :dishes
+
   belongs_to :restaurant
   belongs_to :user
 

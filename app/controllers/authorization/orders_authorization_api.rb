@@ -1,5 +1,5 @@
 module Authorization::OrdersAuthorizationApi
-  ACTIONS = %i[can_update? can_destroy?]
+  ACTIONS = %i[can_update? can_destroy? can_create?]
 
   def can_update?
     render json: @authorizer.update?
@@ -10,7 +10,7 @@ module Authorization::OrdersAuthorizationApi
   end
 
   def can_create?
-    @authorizer.create?
+    render json: @authorizer.create?
   end
 
   private
