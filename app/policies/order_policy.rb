@@ -1,9 +1,23 @@
 class OrderPolicy < ApplicationPolicy
-  def update?
-    user.is_a?(SuperAdmin) || record.admins.include?(user) || user.orders.include?(record)
+  def show?
+    super_admin? || record.admins.include?(user) || user.orders.include?(record)
   end
-  
+
+  def update?
+    super_admin? || record.admins.include?(user) || user.orders.include?(record)
+  end
+
   def destroy?
-    user.is_a?(SuperAdmin) || record.admins.include?(user) || user.orders.include?(record)
+    super_admin? || record.admins.include?(user) || user.orders.include?(record)
+  end
+
+  def create?
+    true
+  end
+
+  class Scope < Scope
+    def resolve
+      scope.where(user_id: user.id)
+    end
   end
 end

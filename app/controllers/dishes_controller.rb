@@ -7,7 +7,8 @@ class DishesController < ApplicationController
   include Authorization::DishesAuthorizationApi
 
   def index
-    render json: DishBlueprint.render(@menu.dishes, view: :with_menus)
+    @view = request.query_parameters[:view]&.to_sym
+    render json: DishBlueprint.render(@menu.dishes, view: @view)
   end
 
   def show
