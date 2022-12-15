@@ -1,6 +1,6 @@
 class OrdersController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_order, only: %i[update destroy show can_update? can_update? can_destroy?]
+  before_action :set_order, only: %i[update destroy show can_update? can_update? can_destroy? cancel]
   before_action :set_user, only: %i[index create can_create?]
   before_action :set_authorizer, only: Authorization::OrdersAuthorizationApi::ACTIONS
 
@@ -55,6 +55,10 @@ class OrdersController < ApplicationController
     response = { error: 'wrong order params' } unless @order.destroy
 
     render json: response
+  end
+
+  def cancel
+    render json: @order.cancel!
   end
 
   private

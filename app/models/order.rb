@@ -11,10 +11,15 @@ class Order < ApplicationRecord
 
   aasm do
     state :active, initial: true
-    state :inactive
+    state :canceled
+    state :completed
 
-    event :close do
-      transitions from: :active, to: :inactive
+    event :cancel do
+      transitions from: :active, to: :canceled
+    end
+
+    event :complete do
+      transitions from: :active, to: :completed
     end
   end
 

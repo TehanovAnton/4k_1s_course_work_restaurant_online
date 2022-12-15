@@ -2,9 +2,8 @@
 class OrderBlueprint < Blueprinter::Base
   identifier :id
 
-  fields :created_at, :updated_at, :restaurant_id, :user_id
-
-  # association :dishes, blueprint: DishBlueprint
+  fields :created_at, :updated_at, :restaurant_id, :user_id, :aasm_state
+  
   association :orders_dishes, blueprint: OrdersDishes
   association :user, blueprint: UserBlueprint
   association :menus, blueprint: MenuBlueprint
