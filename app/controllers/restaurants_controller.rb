@@ -12,7 +12,7 @@ class RestaurantsController < ApplicationController
   end
 
   def show
-    return render json: @restaurant
+    return render json: RestaurantBlueprint.render(@restaurant)
 
     render json: { error: 'wrong restaurant params' }
   end
