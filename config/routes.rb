@@ -15,6 +15,7 @@ Rails.application.routes.draw do
         get :can_destroy, to: 'orders#can_destroy?'
 
         put :cancel, to: 'orders#cancel'
+        post :post_rating, to: 'orders#post_rating'
       end
     end
 

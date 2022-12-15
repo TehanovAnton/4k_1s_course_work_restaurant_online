@@ -31,6 +31,8 @@ class Order < ApplicationRecord
 
   has_many :menus, through: :dishes
 
+  has_one :rating, dependent: :destroy
+
   belongs_to :restaurant
   belongs_to :user
 

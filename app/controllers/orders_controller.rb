@@ -1,6 +1,6 @@
 class OrdersController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_order, only: %i[update destroy show can_update? can_update? can_destroy? cancel]
+  before_action :set_order, only: %i[update destroy show can_update? can_update? can_destroy? cancel post_rating]
   before_action :set_user, only: %i[index create can_create?]
   before_action :set_authorizer, only: Authorization::OrdersAuthorizationApi::ACTIONS
 
@@ -48,6 +48,12 @@ class OrdersController < ApplicationController
     render json: @order.errors.full_messages
   end
 
+  def post_rating
+    @order.rating = Rating.new(rating_params)
+
+    render json: @order.rating
+  end
+
   def destroy
     authorize @order
 
@@ -58,6 +64,8 @@ class OrdersController < ApplicationController
   end
 
   def cancel
+    binding.pry
+
     render json: @order.cancel!
   end
 
@@ -71,7 +79,7 @@ class OrdersController < ApplicationController
   end
 
   def set_order
-    @order = Order.find_by(id: params[:id])
+    @order = Order.find_by(id: params[:id])    
 
     update_auth_header
     render json: { error: 'wrong order params' } unless @order
@@ -79,5 +87,9 @@ class OrdersController < ApplicationController
 
   def order_params
     params.require(:order).permit(Order::PARAMS)
+  end
+
+  def rating_params
+    params.permit(Rating::PARAMS)
   end
 end
