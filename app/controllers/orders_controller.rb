@@ -39,6 +39,8 @@ class OrdersController < ApplicationController
     authorize @order
     if Order.new(order_params).valid?
       @order.dishes.delete_all
+      @order.reservations.delete_all
+
       @order.update(order_params)
       return render json: OrderBlueprint.render(@order)
     end

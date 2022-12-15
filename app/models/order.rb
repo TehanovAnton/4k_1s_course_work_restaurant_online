@@ -3,8 +3,8 @@ class Order < ApplicationRecord
   PARAMS = [
     :user_id,
     :restaurant_id,
-    { orders_dishes_attributes: %i[id dish_id] },
-    { reservations_attributes: %i[id table_id start_at end_at place_type] }
+    { orders_dishes_attributes: %i[dish_id] },
+    { reservations_attributes: %i[table_id start_at end_at place_type] }
   ]
 
   include AASM
