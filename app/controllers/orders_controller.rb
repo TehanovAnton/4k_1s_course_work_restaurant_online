@@ -30,6 +30,7 @@ class OrdersController < ApplicationController
     @order = Order.new(order_params)
 
     if @order.save
+      Notifications::Orders::Confirmation.new(order: @order, customer: current_user).call
       return render json: OrderBlueprint.render(@order)
     end
 
@@ -63,12 +64,17 @@ class OrdersController < ApplicationController
     authorize @order
 
     response = @order
+
+    Notifications::Orders::Cancellation.new(order: @order, customer: current_user).call
+
     response = { error: 'wrong order params' } unless @order.destroy
 
     render json: response
   end
 
   def cancel
+    Notifications::Orders::Cancellation.new(order: @order, customer: current_user).call
+
     render json: @order.cancel!
   end
 
@@ -82,7 +88,7 @@ class OrdersController < ApplicationController
   end
 
   def set_order
-    @order = Order.find_by(id: params[:id])    
+    @order = Order.find_by(id: params[:id])
 
     update_auth_header
     render json: { error: 'wrong order params' } unless @order
