@@ -16,6 +16,7 @@ Rails.application.routes.draw do
 
         put :cancel, to: 'orders#cancel'
         post :post_rating, to: 'orders#post_rating'
+        delete :destroy_rating, to: 'orders#destroy_rating'
       end
     end
 

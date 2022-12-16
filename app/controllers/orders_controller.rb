@@ -1,6 +1,7 @@
 class OrdersController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_order, only: %i[update destroy show can_update? can_update? can_destroy? cancel post_rating]
+  before_action :set_order, only: %i[update destroy show can_update? can_update? can_destroy? cancel post_rating
+                                     destroy_rating]
   before_action :set_user, only: %i[index create can_create?]
   before_action :set_authorizer, only: Authorization::OrdersAuthorizationApi::ACTIONS
 
@@ -54,6 +55,10 @@ class OrdersController < ApplicationController
     render json: @order.rating
   end
 
+  def destroy_rating
+    render json: @order.rating.destroy
+  end
+
   def destroy
     authorize @order
 
@@ -64,8 +69,6 @@ class OrdersController < ApplicationController
   end
 
   def cancel
-    binding.pry
-
     render json: @order.cancel!
   end
 
