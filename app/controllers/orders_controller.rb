@@ -1,11 +1,12 @@
 class OrdersController < ApplicationController
   before_action :authenticate_user!
   before_action :set_order, only: %i[update destroy show can_update? can_update? can_destroy? cancel post_rating
-                                     destroy_rating]
+                                     destroy_rating post_message]
   before_action :set_user, only: %i[index create can_create?]
   before_action :set_authorizer, only: Authorization::OrdersAuthorizationApi::ACTIONS
 
   include Authorization::OrdersAuthorizationApi
+  include Messageble::OrdersMessagesApi
 
   def index
     @scope = if current_user.is_a?(SuperAdmin)
