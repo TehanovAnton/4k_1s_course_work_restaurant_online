@@ -13,6 +13,10 @@ Rails.application.routes.draw do
       member do
         get :can_update, to: 'orders#can_update?'
         get :can_destroy, to: 'orders#can_destroy?'
+
+        put :cancel, to: 'orders#cancel'
+        post :post_rating, to: 'orders#post_rating'
+        delete :destroy_rating, to: 'orders#destroy_rating'
       end
     end
 
