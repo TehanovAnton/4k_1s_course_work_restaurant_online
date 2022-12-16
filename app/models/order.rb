@@ -30,7 +30,7 @@ class Order < ApplicationRecord
   has_many :tables, through: :reservations
 
   has_many :menus, through: :dishes
-
+  has_many :messages, as: :messageble
   has_one :rating, dependent: :destroy
 
   belongs_to :restaurant
