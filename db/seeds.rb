@@ -1,4 +1,5 @@
 super_admin = SuperAdmin.create(name: "Super Admin", email: "super_admin@gmail.com", password: "123123", password_confirmation: "123123")
+customer = Customer.create(name: "Super customer", email: "customer@gmail.com", password: "123123", password_confirmation: "123123")
 
 restaurant = Restaurant.create(name: "Depo", email: "depo@gmail.com", address: "Okt 16")
 

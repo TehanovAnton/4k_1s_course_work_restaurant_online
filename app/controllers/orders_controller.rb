@@ -31,6 +31,11 @@ class OrdersController < ApplicationController
 
     if @order.save
       Notifications::Orders::Confirmation.new(order: @order, customer: current_user).call
+
+      Notifications::Orders::ReminderWorker.perform_at(@order.reservations.first.start_at - 1.day, @order.id)
+      Notifications::Orders::ReminderWorker.perform_at(@order.reservations.first.start_at - 12.hours, @order.id)
+      Notifications::Orders::ReminderWorker.perform_at(@order.reservations.first.start_at - 1.hour, @order.id)
+
       return render json: OrderBlueprint.render(@order)
     end
 
