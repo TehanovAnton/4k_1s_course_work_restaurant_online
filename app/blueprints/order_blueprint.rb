@@ -11,4 +11,5 @@ class OrderBlueprint < Blueprinter::Base
   association :restaurant, blueprint: RestaurantBlueprint
   association :reservations, blueprint: ReservationBlueprint
   association :tables, blueprint: TableBlueprint
+  association :messages, blueprint: MessageBlueprint
 end
