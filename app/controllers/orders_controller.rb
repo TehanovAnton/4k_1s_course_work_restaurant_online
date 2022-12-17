@@ -1,7 +1,7 @@
 class OrdersController < ApplicationController
   before_action :authenticate_user!
   before_action :set_order, only: %i[update destroy show can_update? can_update? can_destroy? cancel post_rating
-                                     destroy_rating post_message delete_message]
+                                     destroy_rating post_message delete_message order_messages]
   before_action :set_user, only: %i[index create can_create?]
   before_action :set_message, only: %i[delete_message]
   before_action :set_authorizer, only: Authorization::OrdersAuthorizationApi::ACTIONS
@@ -40,6 +40,7 @@ class OrdersController < ApplicationController
 
   def update
     authorize @order
+
     if Order.new(order_params).valid?
       @order.dishes.delete_all
       @order.reservations.delete_all

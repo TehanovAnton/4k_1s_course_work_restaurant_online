@@ -18,6 +18,7 @@ Rails.application.routes.draw do
         post :post_rating, to: 'orders#post_rating'
         delete :destroy_rating, to: 'orders#destroy_rating'
 
+        get :order_messages, to: 'orders#order_messages'
         post :post_message, to: 'orders#post_message'
         delete :delete_message, to: 'orders#delete_message'
       end

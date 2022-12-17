@@ -1,11 +1,20 @@
-module Messageble::OrdersMessagesApi  
+module Messageble::OrdersMessagesApi
+  def order_messages
+    authorize @order
+
+    render json: MessageBlueprint.render(@order.messages)
+  end
 
   def post_message
+    authorize Order
+
     @order.messages << Message.new(message_params)
-    render json: MessageBlueprint.render(@order.messages.last)
+    render json: MessageBlueprint.render(@order.messages)
   end
 
   def delete_message
+    authorize @order
+
     render json: @order.messages.destroy(@message)
   end
 
