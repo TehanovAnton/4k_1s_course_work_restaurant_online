@@ -9,7 +9,9 @@ module Messageble::OrdersMessagesApi
     authorize Order
 
     @order.messages << Message.new(message_params)
-    render json: MessageBlueprint.render(@order.messages)
+    ActionCable.server.broadcast('chat_channel', { order_messages: MessageBlueprint.render(@order.messages) })
+
+    render json: ''
   end
 
   def delete_message
