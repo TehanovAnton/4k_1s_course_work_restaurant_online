@@ -5,7 +5,7 @@ module Messageble::RestaurantsMessagesApi
 
   def post_message
     @restaurant.own_messages << Message.new(message_params)
-    ActionCable.server.broadcast('rest_chat_channel', { messages: MessageBlueprint.render(@restaurant.messages) })
+    ActionCable.server.broadcast('rest_chat_channel', { messages: MessageBlueprint.render(@restaurant.own_messages) })
 
     render json: ''
   end
@@ -18,7 +18,6 @@ module Messageble::RestaurantsMessagesApi
 
   def set_message
     @message = Message.find_by(id: params[:message_id])
-    binding.pry
 
     update_auth_header
     render json: { error: 'wrong action params' } unless @message
