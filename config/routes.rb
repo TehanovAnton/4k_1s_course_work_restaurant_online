@@ -69,6 +69,10 @@ Rails.application.routes.draw do
     member do
       get :can_update, to: 'restaurants#can_update?'
       get :can_destroy, to: 'restaurants#can_destroy?'
+
+      get :restaurant_messages, to: 'restaurants#restaurant_messages'
+      post :post_message, to: 'restaurants#post_message'
+      delete :delete_message, to: 'restaurants#delete_message'
     end
   end
 end
