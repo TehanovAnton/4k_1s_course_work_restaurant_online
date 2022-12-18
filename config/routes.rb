@@ -3,10 +3,12 @@ Rails.application.routes.draw do
     registrations: 'overrides/registrations'
   }
 
+  mount ActionCable.server => '/cable'
+
   resources :users, shallow: true do
     resources :orders do
       collection do
-        get :can_create, to: 'orders#can_create?'
+        get :can_create, to: 'orders#can_create?' 
         get :can_index, to: 'orders#can_index?'
       end
 
