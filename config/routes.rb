@@ -3,10 +3,12 @@ Rails.application.routes.draw do
     registrations: 'overrides/registrations'
   }
 
+  mount ActionCable.server => '/cable'
+
   resources :users, shallow: true do
     resources :orders do
       collection do
-        get :can_create, to: 'orders#can_create?'
+        get :can_create, to: 'orders#can_create?' 
         get :can_index, to: 'orders#can_index?'
       end
 
@@ -17,6 +19,10 @@ Rails.application.routes.draw do
         put :cancel, to: 'orders#cancel'
         post :post_rating, to: 'orders#post_rating'
         delete :destroy_rating, to: 'orders#destroy_rating'
+
+        get :order_messages, to: 'orders#order_messages'
+        post :post_message, to: 'orders#post_message'
+        delete :delete_message, to: 'orders#delete_message'
       end
     end
 
@@ -63,6 +69,10 @@ Rails.application.routes.draw do
     member do
       get :can_update, to: 'restaurants#can_update?'
       get :can_destroy, to: 'restaurants#can_destroy?'
+
+      get :restaurant_messages, to: 'restaurants#restaurant_messages'
+      post :post_message, to: 'restaurants#post_message'
+      delete :delete_message, to: 'restaurants#delete_message'
     end
   end
 end
