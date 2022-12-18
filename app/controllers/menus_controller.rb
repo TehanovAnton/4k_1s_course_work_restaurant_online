@@ -20,7 +20,6 @@ class MenusController < ApplicationController
   def create
     authorize Menu
 
-    binding.pry
     return render json: Menu.create(menu_params)
 
     render json: { error: 'wrong menu params' }

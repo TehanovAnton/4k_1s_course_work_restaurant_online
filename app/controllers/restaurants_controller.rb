@@ -1,9 +1,13 @@
 class RestaurantsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_restaurant, only: %i[update destroy show can_update? can_destroy?]
+  before_action :set_restaurant, only: %i[update destroy show can_update? can_destroy? post_message delete_message
+                                          restaurant_messages]
+  before_action :set_message, only: %i[delete_message]
   before_action :set_authorizer, only: Authorization::RestaurantsAuthorizationApi::ACTIONS
 
   include Authorization::RestaurantsAuthorizationApi
+  include Messageble::RestaurantsMessagesApi
+  
 
   def index
     @restaurants = Restaurant.includes(:menus).all
@@ -46,7 +50,7 @@ class RestaurantsController < ApplicationController
   private
 
   def set_restaurant
-    @restaurant = Restaurant.find_by(id: params[:id])
+    @restaurant = Restaurant.includes(:own_messages).find_by(id: params[:id])
 
     update_auth_header
     render json: { error: 'wrong restaurant params' } unless @restaurant

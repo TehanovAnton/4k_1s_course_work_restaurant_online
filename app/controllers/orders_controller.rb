@@ -16,8 +16,7 @@ class OrdersController < ApplicationController
       current_user.orders
     end
 
-    @orders = policy_scope(@scope)
-    render json: OrderBlueprint.render(@orders)
+    render json: OrderBlueprint.render(@scope)
   end
 
   def show
@@ -31,6 +30,7 @@ class OrdersController < ApplicationController
   def create
     @order = Order.new(order_params)
 
+    @order.messages << Message.new(message_params) 
     if @order.save
       return render json: OrderBlueprint.render(@order)
     end
