@@ -32,6 +32,12 @@ class OrdersController < ApplicationController
 
     @order.messages << Message.new(message_params) 
     if @order.save
+      Notifications::Orders::Confirmation.new(order: @order, customer: current_user).call
+
+      Notifications::Orders::ReminderWorker.perform_at(@order.reservations.first.start_at - 1.day, @order.id)
+      Notifications::Orders::ReminderWorker.perform_at(@order.reservations.first.start_at - 12.hours, @order.id)
+      Notifications::Orders::ReminderWorker.perform_at(@order.reservations.first.start_at - 1.hour, @order.id)
+
       return render json: OrderBlueprint.render(@order)
     end
 
@@ -66,12 +72,17 @@ class OrdersController < ApplicationController
     authorize @order
 
     response = @order
+
+    Notifications::Orders::Cancellation.new(order: @order, customer: current_user).call
+
     response = { error: 'wrong order params' } unless @order.destroy
 
     render json: response
   end
 
   def cancel
+    Notifications::Orders::Cancellation.new(order: @order, customer: current_user).call
+
     render json: @order.cancel!
   end
 
@@ -85,7 +96,7 @@ class OrdersController < ApplicationController
   end
 
   def set_order
-    @order = Order.find_by(id: params[:id])    
+    @order = Order.find_by(id: params[:id])
 
     update_auth_header
     render json: { error: 'wrong order params' } unless @order

@@ -22,6 +22,9 @@ gem 'jbuilder', '~> 2.7'
 
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
+#
+# Notifications
+gem 'sidekiq'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.4', require: false
@@ -30,11 +33,10 @@ group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
 
-  gem 'rspec-rails', '~> 6.0.0'
-
   gem 'pry', '~> 0.14.1'
   gem 'pry-nav'
   gem 'pry-remote'
+
 end
 
 group :development do
@@ -44,6 +46,7 @@ group :development do
   # Can be configured to work on production as well see: https://github.com/MiniProfiler/rack-mini-profiler/blob/master/README.md
   gem 'rack-mini-profiler', '~> 2.0'
   gem 'listen', '~> 3.3'
+  gem 'rspec-rails', '~> 6.0.0'
   gem "solargraph", "~> 0.44.2"
   gem 'solargraph-rails', '~> 1.0', '>= 1.0.1'
 end
