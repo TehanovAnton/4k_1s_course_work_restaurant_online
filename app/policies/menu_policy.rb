@@ -1,6 +1,6 @@
 class MenuPolicy < ApplicationPolicy
   def create?
-    super_admin? || restaurant_admin?
+    super_admin? || user.is_a?(Admin)
   end
 
   def update?

@@ -24,7 +24,11 @@ class RestaurantsController < ApplicationController
   def create
     authorize Restaurant
 
-    return render json: Restaurant.create(restaurant_params)
+    @restaurant = Restaurant.new(restaurant_params)
+    if @restaurant.save
+      @restaurant.admins << current_user
+      return render json: @restaurant
+    end
 
     render json: { error: 'wrong restaurant params' }
   end

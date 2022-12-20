@@ -6,6 +6,6 @@ class Restaurant < ApplicationRecord
 
   has_many :own_messages, as: :messageble, class_name: 'Message'
 
-  has_many :restaurants_admins
+  has_many :restaurants_admins, dependent: :destroy
   has_many :admins, through: :restaurants_admins
 end
