@@ -7,7 +7,7 @@ class RestaurantsController < ApplicationController
 
   include Authorization::RestaurantsAuthorizationApi
   include Messageble::RestaurantsMessagesApi
-  
+  include Searchable::RestaurantsSearchApi
 
   def index
     @restaurants = Restaurant.includes(:menus).all
