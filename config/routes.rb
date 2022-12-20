@@ -64,6 +64,7 @@ Rails.application.routes.draw do
 
     collection do
       get :can_create, to: 'restaurants#can_create?'
+      get :search, to: 'restaurants#search'
     end
 
     member do
