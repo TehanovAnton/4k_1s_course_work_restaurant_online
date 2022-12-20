@@ -3,6 +3,6 @@ module Searchable::RestaurantsSearchApi
     @match_expression = params[:match_expression]
     @restaurants = Restaurant.where("name like '%#{@match_expression}%'")
 
-    render json: RestaurantBlueprint.render(@restaurants  )
+    render json: RestaurantBlueprint.render(@restaurants)
   end
 end
