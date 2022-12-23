@@ -1,6 +1,6 @@
 class DishPolicy < ApplicationPolicy
   def create?
-    super_admin? || record.admins.include?(user)
+    super_admin? || user.is_a?(Admin)
   end
 
   def update?
