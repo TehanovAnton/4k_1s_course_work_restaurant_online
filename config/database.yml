@@ -5,23 +5,36 @@
 #   gem 'sqlite3'
 #
 default: &default
-  username: <%= ENV["DB_USER"] %>
-  password: <%= ENV["DB_USER_PASSWORD"] %>
+  # username: <%= ENV["DB_USER"] %>e: <%= ENV["DB_USER"] %>
+  # password: <%= ENV["DB_USER_PASSWORD"] %>
+  # adapter: postgresql
+  # pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  # timeout
+  # password: <%= ENV["DB_USER_PASSWORD"] %>
+  # adapter: postgresql
+  # pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  # timeout: 5000
+  
   adapter: postgresql
-  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-  timeout: 5000
+  host: db
+  username: postgres
+  password: password
+  pool: 5
 
 development:
   <<: *default
-  database: retaurant_online_development
+  # database: retaurant_online_development
+  database: myapp_development
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
 # Do not set this db to the same as development or production.
 test:
-  <<: *default
-  database: retaurant_online_test
+  <<: *default  
+  # database: retaurant_online_test
+  database: myapp_development
 
 production:
   <<: *default
-  database: retaurant_online_production
+  # database: retaurant_online_production
+  database: myapp_production
