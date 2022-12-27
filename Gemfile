@@ -36,6 +36,7 @@ group :development, :test do
   gem 'pry-nav'
   gem 'pry-remote'
 
+  gem 'factory_bot_rails'
 end
 
 group :development do
