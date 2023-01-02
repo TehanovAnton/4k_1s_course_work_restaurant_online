@@ -1,7 +1,7 @@
 USER_NAME_BY_TYPE = {
   'Customer' => 'andrew',
   'Admin' => 'roma',
-  'SuperAdmin' => 'antont'
+  'SuperAdmin' => 'anton'
 }.freeze
 
 FactoryBot.define do
