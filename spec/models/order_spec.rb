@@ -7,23 +7,8 @@ RSpec.describe Order, type: :model do
     let!(:avenue_restaurant) { FactoryBot.create(:restaurant) }
     let!(:bergamo_restaurant) { FactoryBot.create(:restaurant, name: 'bergamo') }
 
-    let!(:avenue_menu) { FactoryBot.create(:menu, restaurant: avenue_restaurant) }
-    let!(:bergamo_menu) { FactoryBot.create(:menu, restaurant: bergamo_restaurant) }
-
-    let!(:avenue_dishes) do
-      ['coffee', 'poriddge', 'toasts', 'milk', 'banana'].each do |meal|
-        FactoryBot.create(:dish, name: meal, menu: avenue_menu)
-      end
-
-      avenue_menu.dishes
-    end
-    let!(:bergamo_dishes) do
-      ['coffee', 'poriddge', 'toasts', 'milk', 'banana'].each do |meal|
-        FactoryBot.create(:dish, name: meal, menu: bergamo_menu)
-      end
-
-      bergamo_menu.dishes
-    end
+    let!(:avenue_menu) { FactoryBot.create(:menu, :breakfast, restaurant: avenue_restaurant) }
+    let!(:bergamo_menu) { FactoryBot.create(:menu, :breakfast, restaurant: bergamo_restaurant) }
 
     let!(:order_with_unknown_dishes) do
       dishes = []

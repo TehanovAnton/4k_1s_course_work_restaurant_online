@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :dish do
     name {}
-    menu_id {}
+    menu
   end
 end

@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :table do
     number {}
-    restaurant_id {}
+    restaurant
   end
 end
