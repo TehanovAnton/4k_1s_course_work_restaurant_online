@@ -4,7 +4,7 @@ module Validations
       extend ActiveSupport::Concern
 
       included do
-        validates :dish_id, :order_id, presence: true
+        validates :dish_id, presence: true
 
         validates_with Order::Validators::OrderRestaurantDishPresenceValidator
       end
