@@ -1,4 +1,6 @@
 class MenusController < DefaultController
+  MODEL = Menu
+
   before_action :set_restaurant, only: %i[create can_create?]
   before_action :set_menu, only: %i[update destroy show can_update? can_destroy?]
   before_action :set_authorizer, only: Authorization::MenusAuthorizationApi::ACTIONS
@@ -16,15 +18,6 @@ class MenusController < DefaultController
     render json: MenuBlueprint.render(@menu, view: :with_dishes)
   end
 
-  def update
-    authorize @menu
-    response = { error: 'wrong menu params' }
-
-    response = @menu if @menu.update(menu_params)
-
-    render json: response
-  end
-
   def destroy
     authorize @menu
     response = @menu
@@ -40,7 +33,13 @@ class MenusController < DefaultController
     case action
     when :create
       Menu
+    when :update
+      @menu
     end
+  end
+
+  def updater_service_class
+    Models::Updaters::MenuUpdater
   end
 
   def creater_service_class
@@ -48,7 +47,7 @@ class MenusController < DefaultController
   end
 
   def set_menu
-    @menu = Menu.includes(:restaurant).find_by(id: params[:id])
+    @model = @menu = Menu.includes(:restaurant).find_by(id: params[:id])
 
     update_auth_header
     render json: { error: 'wrong menu params' } unless @menu
@@ -59,9 +58,5 @@ class MenusController < DefaultController
 
     update_auth_header
     render json: { error: 'wrong menu params' } unless @restaurant
-  end
-
-  def menu_params
-    params.require(:menu).permit(:name, :restaurant_id)
   end
 end
