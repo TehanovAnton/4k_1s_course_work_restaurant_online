@@ -1,4 +1,6 @@
 class Menu < ApplicationRecord
+  include Validations::Menu::MenuValidation
+
   has_many :dishes
   belongs_to :restaurant
 

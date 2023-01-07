@@ -1,5 +1,4 @@
-class MenusController < ApplicationController
-  before_action :authenticate_user!
+class MenusController < DefaultController
   before_action :set_restaurant, only: %i[create can_create?]
   before_action :set_menu, only: %i[update destroy show can_update? can_destroy?]
   before_action :set_authorizer, only: Authorization::MenusAuthorizationApi::ACTIONS
@@ -15,14 +14,6 @@ class MenusController < ApplicationController
 
   def show
     render json: MenuBlueprint.render(@menu, view: :with_dishes)
-  end
-
-  def create
-    authorize Menu
-
-    return render json: Menu.create(menu_params)
-
-    render json: { error: 'wrong menu params' }
   end
 
   def update
