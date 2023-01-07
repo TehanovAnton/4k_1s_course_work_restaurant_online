@@ -36,6 +36,13 @@ class MenusController < DefaultController
 
   private
 
+  def authorizable_instance(action)
+    case action
+    when :create
+      Menu
+    end
+  end
+
   def creater_service_class
     Models::Creaters::MenuCreater
   end
