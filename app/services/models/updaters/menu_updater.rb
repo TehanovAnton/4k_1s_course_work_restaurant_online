@@ -6,10 +6,6 @@ module Models
       def model_class
         Menu
       end
-
-      def model_serializer
-        MenuBlueprint
-      end
     end
   end
 end

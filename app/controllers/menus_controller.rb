@@ -1,8 +1,6 @@
 class MenusController < DefaultController
-  MODEL = Menu
-
   before_action :set_restaurant, only: %i[create can_create?]
-  before_action :set_menu, only: %i[update destroy show can_update? can_destroy?]
+  before_action :set_model, only: %i[update destroy show can_update? can_destroy?]
   before_action :set_authorizer, only: Authorization::MenusAuthorizationApi::ACTIONS
 
   include Authorization::MenusAuthorizationApi
@@ -20,14 +18,20 @@ class MenusController < DefaultController
 
   private
 
+  class << self
+    def model_class
+      Menu
+    end
+  end
+
   def authorizable_instance(action)
     case action
     when :create
       Menu
     when :update
-      @menu
+      @model
     when :destroy
-      @menu
+      @model
     end
   end
 
@@ -37,17 +41,6 @@ class MenusController < DefaultController
 
   def creater_service_class
     Models::Creaters::MenuCreater
-  end
-
-  def destroy_service_class
-    Models::Destroyers::MenuDestroyer
-  end
-
-  def set_menu
-    @model = @menu = Menu.includes(:restaurant).find_by(id: params[:id])
-
-    update_auth_header
-    render json: { error: 'wrong menu params' } unless @menu
   end
 
   def set_restaurant

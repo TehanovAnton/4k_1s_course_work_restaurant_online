@@ -1,6 +1,4 @@
 class DefaultController < ApplicationController
-  MODEL = ''.freeze
-
   before_action :authenticate_user!
 
   def create
@@ -18,7 +16,6 @@ class DefaultController < ApplicationController
   end
 
   def destroy
-    binding.pry
     authorize authorizable_instance(:destroy)
 
     destroy_service = destroy_service_class.new
@@ -27,22 +24,23 @@ class DefaultController < ApplicationController
 
   private
 
-  class << self
-    def model
-      self::MODEL
-    end
+  def set_model
+    @model = model_class.find_by(id: params[:id])
+
+    update_auth_header
+    render json: { error: 'wrong menu params' } unless @model
+  end
+
+  def model_class
+    self.class.model_class
   end
 
   def model_params
-    params.require(model_scope).permit(model::PARAMS)
+    params.require(model_scope).permit(model_class::PARAMS)
   end
 
   def model_scope
-    model.name.downcase.to_sym
-  end
-
-  def model
-    self.class.model
+    model_class.name.downcase.to_sym
   end
 
   def updater_service_class

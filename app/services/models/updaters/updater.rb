@@ -30,6 +30,10 @@ module Models
 
         { json: model_serializer.render(model) }
       end
+
+      def model_serializer
+        model_class::MODEL_SERIALIZER_CLASS
+      end
     end
   end
 end

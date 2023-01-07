@@ -1,5 +1,6 @@
 class Menu < ApplicationRecord
   PARAMS = %i[name restaurant_id].freeze
+  MODEL_SERIALIZER_CLASS = MenuBlueprint
 
   include Validations::Menu::MenuValidation
 
