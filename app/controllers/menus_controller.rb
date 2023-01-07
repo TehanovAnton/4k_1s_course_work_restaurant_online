@@ -36,6 +36,10 @@ class MenusController < DefaultController
 
   private
 
+  def creater_service_class
+    Models::Creaters::MenuCreater
+  end
+
   def set_menu
     @menu = Menu.includes(:restaurant).find_by(id: params[:id])
 

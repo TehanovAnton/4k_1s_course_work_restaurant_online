@@ -4,7 +4,13 @@ class DefaultController < ApplicationController
   def create
     authorize Menu
 
-    creater = Models::Creaters::MenuCreater.new(menu_params)
-    render(**creater.create)
+    creater_service = creater_service_class.new(menu_params)
+    render(**creater_service.create)
+  end
+
+  private
+
+  def creater_service_class
+    Models::Creaters::Creater
   end
 end
