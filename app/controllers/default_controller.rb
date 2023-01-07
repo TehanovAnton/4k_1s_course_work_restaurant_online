@@ -17,6 +17,14 @@ class DefaultController < ApplicationController
     render(**updater_service.update(@model))
   end
 
+  def destroy
+    binding.pry
+    authorize authorizable_instance(:destroy)
+
+    destroy_service = destroy_service_class.new
+    render(**destroy_service.destroy(@model))
+  end
+
   private
 
   class << self
@@ -43,6 +51,10 @@ class DefaultController < ApplicationController
 
   def creater_service_class
     Models::Creaters::Creater
+  end
+
+  def destroy_service_class
+    Models::Destroyers::Destroyer
   end
 
   def authorizable_instance(action)

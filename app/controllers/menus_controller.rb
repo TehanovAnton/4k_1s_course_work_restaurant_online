@@ -18,15 +18,6 @@ class MenusController < DefaultController
     render json: MenuBlueprint.render(@menu, view: :with_dishes)
   end
 
-  def destroy
-    authorize @menu
-    response = @menu
-
-    response = { error: 'wrong menu params' } unless @menu.destroy
-
-    render json: response
-  end
-
   private
 
   def authorizable_instance(action)
@@ -34,6 +25,8 @@ class MenusController < DefaultController
     when :create
       Menu
     when :update
+      @menu
+    when :destroy
       @menu
     end
   end
@@ -44,6 +37,10 @@ class MenusController < DefaultController
 
   def creater_service_class
     Models::Creaters::MenuCreater
+  end
+
+  def destroy_service_class
+    Models::Destroyers::MenuDestroyer
   end
 
   def set_menu
