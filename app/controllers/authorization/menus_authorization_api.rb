@@ -3,7 +3,7 @@ module Authorization::MenusAuthorizationApi
 
   ACTIONS = %i[can_create? can_update? can_destroy?].freeze
   MODEL_AUTH_ACTIONS = %i[can_update? can_destroy?].freeze
-  MODEL_AUTH_CREATE_ACTION = :can_create?
+  MODEL_AUTH_CREATE_ACTION = %i[can_create?].freeze
 
   included do
     before_action :set_authorizer, only: Authorization::MenusAuthorizationApi::ACTIONS

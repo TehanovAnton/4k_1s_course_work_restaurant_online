@@ -9,6 +9,7 @@ class DefaultController < ApplicationController
   end
 
   def update
+    binding.pry
     authorize authorizable_instance(:update)
 
     updater_service = updater_service_class.new(model_params)
