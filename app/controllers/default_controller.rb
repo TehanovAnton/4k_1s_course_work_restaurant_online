@@ -24,6 +24,12 @@ class DefaultController < ApplicationController
 
   private
 
+  class << self
+    def model_class
+      raise NotImplementedError, 'Model controller should provide model class'
+    end
+  end
+
   def set_model
     @model = model_class.find_by(id: params[:id])
 

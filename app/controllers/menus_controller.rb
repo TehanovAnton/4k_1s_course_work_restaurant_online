@@ -1,7 +1,8 @@
 class MenusController < DefaultController
-  before_action :set_restaurant, only: %i[create can_create?]
-  before_action :set_model, only: %i[update destroy show can_update? can_destroy?]
-  before_action :set_authorizer, only: Authorization::MenusAuthorizationApi::ACTIONS
+  before_action :set_model, only: %i[update
+                                     destroy
+                                     show].concat(Authorization::MenusAuthorizationApi::MODEL_AUTH_ACTIONS)
+  before_action :set_restaurant, only: %i[create].concat(Authorization::MenusAuthorizationApi::MODEL_AUTH_CREATE_ACTION)
 
   include Authorization::MenusAuthorizationApi
 

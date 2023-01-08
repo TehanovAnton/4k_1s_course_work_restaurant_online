@@ -1,25 +1,32 @@
-
 module Authorization::MenusAuthorizationApi
-  ACTIONS = %i[can_create? can_update? can_destroy?]
+  extend ActiveSupport::Concern
 
-  def can_create?
-    render json: @authorizer.create?
-  end
+  ACTIONS = %i[can_create? can_update? can_destroy?].freeze
+  MODEL_AUTH_ACTIONS = %i[can_update? can_destroy?].freeze
+  MODEL_AUTH_CREATE_ACTION = :can_create?
 
-  def can_update?
-    render json: @authorizer.update?
-  end
+  included do
+    before_action :set_authorizer, only: Authorization::MenusAuthorizationApi::ACTIONS
 
-  def can_destroy?
-    render json: @authorizer.destroy?
-  end
+    def can_create?
+      render json: @authorizer.create?
+    end
 
-  private
+    def can_update?
+      render json: @authorizer.update?
+    end
 
-  def set_authorizer
-    auth_obj = @restaurant
-    auth_obj = @menu if params[:id]
+    def can_destroy?
+      render json: @authorizer.destroy?
+    end
 
-    @authorizer = MenuPolicy.new(current_user, auth_obj)
+    private
+
+    def set_authorizer
+      auth_obj = @restaurant
+      auth_obj = @menu if params[:id]
+
+      @authorizer = MenuPolicy.new(current_user, auth_obj)
+    end
   end
 end
