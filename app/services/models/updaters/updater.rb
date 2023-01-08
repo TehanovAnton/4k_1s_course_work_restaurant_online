@@ -7,22 +7,19 @@ module Models
         raise NotImplementedError, 'Method should be implemented'
       end
 
-      def model_class
-        raise NotImplementedError, 'Method should be implemented'
-      end
-
       def model_serializer
         raise NotImplementedError, 'Method should be implemented'
       end
     end
 
     class Updater
-      attr_reader :params
+      attr_reader :params, :model_class
 
       include UpdaterRequiredMethods
 
-      def initialize(params)
+      def initialize(model_class, params)
         @params = params
+        @model_class = model_class
       end
 
       def update(model)

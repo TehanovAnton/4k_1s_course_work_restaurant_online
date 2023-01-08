@@ -19,19 +19,11 @@ class DishesController < DefaultController
 
   private
 
-  class << self
+  class << selfModels::Destroyers
     def model_class
       Dish
     end
   end
-
-  def updater_service_class
-    Models::Updaters::DishUpdater
-  end
-
-  def creater_service_class
-    Models::Creaters::DishCreater
-  end  
 
   def set_menu
     @menu = Menu.includes(:dishes).find(params[:menu_id])

@@ -4,15 +4,14 @@ class DefaultController < ApplicationController
   def create
     authorize authorizable_instance(:create)
 
-    creater_service = creater_service_class.new(model_params)
+    creater_service = creater_service_class.new(model_class, model_params)
     render(**creater_service.create)
   end
 
   def update
-    binding.pry
     authorize authorizable_instance(:update)
 
-    updater_service = updater_service_class.new(model_params)
+    updater_service = updater_service_class.new(model_class, model_params)
     render(**updater_service.update(@model))
   end
 
@@ -51,15 +50,15 @@ class DefaultController < ApplicationController
   end
 
   def updater_service_class
-    Models::Updaters::Updater
+    model_class::MODEL_UPDATER_CLASS
   end
 
   def creater_service_class
-    Models::Creaters::Creater
+    model_class::MODEL_CREATER_CLASS
   end
 
   def destroy_service_class
-    Models::Destroyers::Destroyer
+    model_class::MODEL_DESTROYER_CLASS
   end
 
   def authorizable_instance(action)
