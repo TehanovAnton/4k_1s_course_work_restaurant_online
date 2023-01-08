@@ -36,14 +36,6 @@ class MenusController < DefaultController
     end
   end
 
-  def updater_service_class
-    Models::Updaters::MenuUpdater
-  end
-
-  def creater_service_class
-    Models::Creaters::MenuCreater
-  end
-
   def set_restaurant
     @restaurant = Restaurant.find_by(id: params[:restaurant_id])
 
