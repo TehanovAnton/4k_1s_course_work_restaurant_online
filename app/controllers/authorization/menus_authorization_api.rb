@@ -1,3 +1,4 @@
+#  frozen_string_literal: true
 module Authorization::MenusAuthorizationApi
   extend ActiveSupport::Concern
 
@@ -24,7 +25,7 @@ module Authorization::MenusAuthorizationApi
 
     def set_authorizer
       auth_obj = @restaurant
-      auth_obj = @menu if params[:id]
+      auth_obj = @model if params[:id]
 
       @authorizer = MenuPolicy.new(current_user, auth_obj)
     end

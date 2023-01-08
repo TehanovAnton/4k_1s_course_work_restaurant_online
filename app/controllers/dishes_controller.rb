@@ -1,8 +1,9 @@
 class DishesController < DefaultController
-  before_action :authenticate_user!
-  before_action :set_menu, only: %i[index create can_create?]
-  before_action :set_model, only: %i[update destroy show can_destroy? can_update?]
-  before_action :set_authorizer, only: Authorization::DishesAuthorizationApi::ACTIONS
+  before_action :set_model, only: %i[update
+                                     destroy
+                                     show].concat(Authorization::DishesAuthorizationApi::MODEL_AUTH_ACTIONS)
+  before_action :set_menu, only: %i[index
+                                    create].concat(Authorization::DishesAuthorizationApi::MODEL_AUTH_CREATE_ACTION)
 
   include Authorization::DishesAuthorizationApi
 
@@ -19,7 +20,7 @@ class DishesController < DefaultController
 
   private
 
-  class << selfModels::Destroyers
+  class << self
     def model_class
       Dish
     end

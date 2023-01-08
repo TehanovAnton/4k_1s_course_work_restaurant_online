@@ -1,25 +1,33 @@
-
+#  frozen_string_literal: true
 module Authorization::DishesAuthorizationApi
-  ACTIONS = %i[can_create? can_update? can_destroy?]
+  ACTIONS = %i[can_create? can_update? can_destroy?].freeze
+  MODEL_AUTH_ACTIONS = %i[can_update? can_destroy?].freeze
+  MODEL_AUTH_CREATE_ACTION = %i[can_create?].freeze
 
-  def can_create?
-    render json: @authorizer.create?
-  end
+  extend ActiveSupport::Concern
 
-  def can_update?
-    render json: @authorizer.update?
-  end
+  included do
+    before_action :set_authorizer, only: Authorization::DishesAuthorizationApi::ACTIONS
 
-  def can_destroy?
-    render json: @authorizer.destroy?
-  end
+    def can_create?
+      render json: @authorizer.create?
+    end
 
-  private
+    def can_update?
+      render json: @authorizer.update?
+    end
 
-  def set_authorizer
-    auth_obj = @menu
-    auth_obj = @dish if params[:id]
+    def can_destroy?
+      render json: @authorizer.destroy?
+    end
 
-    @authorizer = DishPolicy.new(current_user, auth_obj)
+    private
+
+    def set_authorizer
+      auth_obj = @menu
+      auth_obj = @model if params[:id]
+
+      @authorizer = DishPolicy.new(current_user, auth_obj)
+    end
   end
 end
