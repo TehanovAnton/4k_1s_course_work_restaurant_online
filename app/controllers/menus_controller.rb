@@ -14,7 +14,7 @@ class MenusController < DefaultController
   end
 
   def show
-    render json: MenuBlueprint.render(@menu, view: :with_dishes)
+    render json: MenuBlueprint.render(@model, view: :with_dishes)
   end
 
   private
