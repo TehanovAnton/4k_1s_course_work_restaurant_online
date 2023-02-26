@@ -7,7 +7,7 @@ class Menu < ApplicationRecord
 
   include Validations::Menu::MenuValidation
 
-  has_many :dishes
+  has_many :dishes, dependent: :destroy
   belongs_to :restaurant
 
   delegate :admins, to: :restaurant
