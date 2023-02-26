@@ -1,8 +1,9 @@
-class DishesController < ApplicationController
-  before_action :authenticate_user!
-  before_action :set_menu, only: %i[index create can_create?]
-  before_action :set_dish, only: %i[update destroy show can_destroy? can_update?]
-  before_action :set_authorizer, only: Authorization::DishesAuthorizationApi::ACTIONS
+class DishesController < DefaultController
+  before_action :set_model, only: %i[update
+                                     destroy
+                                     show].concat(Authorization::DishesAuthorizationApi::MODEL_AUTH_ACTIONS)
+  before_action :set_menu, only: %i[index
+                                    create].concat(Authorization::DishesAuthorizationApi::MODEL_AUTH_CREATE_ACTION)
 
   include Authorization::DishesAuthorizationApi
 
@@ -17,39 +18,12 @@ class DishesController < ApplicationController
     render json: { error: 'wrong dish params' }
   end
 
-  def create
-    authorize Dish
-
-    return render json: Dish.create(dish_params)
-
-    render json: { error: 'wrong dish params' }
-  end
-
-  def update
-    authorize @dish
-    response = { error: 'wrong dish params' }
-
-    response = @dish if @dish.update(dish_params)
-
-    render json: response
-  end
-
-  def destroy
-    authorize @dish
-
-    response = @dish
-    response = { error: 'wrong dish params' } unless @dish.destroy
-
-    render json: response
-  end
-
   private
 
-  def set_dish
-    @dish = Dish.find_by(id: params[:id])
-
-    update_auth_header
-    render json: { error: 'wrong dish params' } unless @dish
+  class << self
+    def model_class
+      Dish
+    end
   end
 
   def set_menu
@@ -59,7 +33,14 @@ class DishesController < ApplicationController
     render json: { error: 'wrong dish params' } unless @menu
   end
 
-  def dish_params
-    params.require(:dish).permit(:name, :menu_id)
+  def authorizable_instance(action)
+    case action
+    when :create
+      self.class.model_class
+    when :update
+      @model
+    when :destroy
+      @model
+    end
   end
 end

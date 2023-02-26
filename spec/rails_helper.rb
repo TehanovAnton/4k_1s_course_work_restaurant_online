@@ -1,9 +1,12 @@
-require_relative 'models/shared_examples'
-
 # This file is copied to spec/ when you run 'rails generate rspec:install'
 require 'spec_helper'
 ENV['RAILS_ENV'] ||= 'test'
 require_relative '../config/environment'
+require './spec/support/factory_bot'
+
+# data setups
+require './spec/setups/default'
+
 # Prevent database truncation if the environment is production
 abort("The Rails environment is running in production mode!") if Rails.env.production?
 require 'rspec/rails'

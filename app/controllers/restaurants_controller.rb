@@ -11,8 +11,9 @@ class RestaurantsController < ApplicationController
 
   def index
     @restaurants = Restaurant.includes(:menus).all
+    view = params['resataurant_view'] || 'default'
 
-    render json: RestaurantBlueprint.render(@restaurants)
+    render json: RestaurantBlueprint.render(@restaurants, view: view.to_sym)
   end
 
   def show

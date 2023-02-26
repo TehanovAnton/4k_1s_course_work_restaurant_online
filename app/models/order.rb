@@ -7,6 +7,8 @@ class Order < ApplicationRecord
     { reservations_attributes: %i[table_id start_at end_at place_type] }
   ]
 
+  include Validations::Order::OrderValidation
+
   include AASM
 
   aasm do
