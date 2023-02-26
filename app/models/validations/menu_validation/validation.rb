@@ -1,6 +1,6 @@
 module Validations
-  module Menu
-    module MenuValidation
+  module MenuValidation
+    module Validation
       extend ActiveSupport::Concern
 
       included do
@@ -9,6 +9,8 @@ module Validations
             "Could not create #{data[:model]} without #{data[:attribute]}"
           end
         }
+
+        validates_with MenuValidation::Validators::RestaurantMenuNameUniqnessValidator
       end
     end
   end
