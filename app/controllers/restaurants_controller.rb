@@ -1,4 +1,4 @@
-class RestaurantsController < ApplicationController
+class RestaurantsController < DefaultController
   before_action :authenticate_user!
   before_action :set_restaurant, only: %i[update destroy show can_update? can_destroy? post_message delete_message
                                           restaurant_messages]
@@ -22,18 +22,6 @@ class RestaurantsController < ApplicationController
     render json: { error: 'wrong restaurant params' }
   end
 
-  def create
-    authorize Restaurant
-
-    @restaurant = Restaurant.new(restaurant_params)
-    if @restaurant.save
-      @restaurant.admins << current_user
-      return render json: @restaurant
-    end
-
-    render json: { error: 'wrong restaurant params' }
-  end
-
   def update
     authorize @restaurant
     response = { error: 'wrong restaurant params' }
@@ -53,6 +41,21 @@ class RestaurantsController < ApplicationController
   end
 
   private
+
+  class << self
+    def model_class
+      Restaurant
+    end
+  end
+
+  def authorizable_instance(action)
+    case action
+    when :create
+      self.class.model_class
+    when :update, :destroy
+      @model
+    end
+  end
 
   def set_restaurant
     @restaurant = Restaurant.includes(:own_messages).find_by(id: params[:id])

@@ -1,4 +1,10 @@
 class Restaurant < ApplicationRecord
+  PARAMS = %i[name email address].freeze
+  MODEL_SERIALIZER_CLASS = RestaurantBlueprint
+  MODEL_UPDATER_CLASS = Models::Updaters::Updater
+  MODEL_CREATER_CLASS = Models::Creaters::Creater
+  MODEL_DESTROYER_CLASS = Models::Destroyers::Destroyer
+
   include Validations::RestaurantValidation
 
   has_many :tables, dependent: :destroy

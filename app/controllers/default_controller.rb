@@ -1,5 +1,21 @@
+
+module DefaultControllerRequieredMethods
+  def authorizable_instance(action)
+    rais NotImplementedError, 'Model controller should provide authorizable_instance method'
+  end
+end
+
+module DefaultControllerClassRequieredMethods
+  def model_class
+    raise NotImplementedError, 'Model controller should provide model class'
+  end
+end
+
 class DefaultController < ApplicationController
   before_action :authenticate_user!
+
+  extend DefaultControllerClassRequieredMethods
+  include DefaultControllerRequieredMethods
 
   def create
     authorize authorizable_instance(:create)
