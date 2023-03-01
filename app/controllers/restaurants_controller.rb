@@ -1,8 +1,8 @@
 class RestaurantsController < DefaultController
   before_action :authenticate_user!
-  before_action :set_restaurant, only: %i[update destroy show can_update? can_destroy? post_message delete_message
-                                          restaurant_messages]
-  before_action :set_message, only: %i[delete_message]
+  before_action :set_model, only: %i[update
+                                     destroy
+                                     show].concat(Authorization::RestaurantsAuthorizationApi::MODEL_AUTH_ACTIONS)
   before_action :set_authorizer, only: Authorization::RestaurantsAuthorizationApi::ACTIONS
 
   include Authorization::RestaurantsAuthorizationApi
@@ -20,15 +20,6 @@ class RestaurantsController < DefaultController
     return render json: RestaurantBlueprint.render(@restaurant)
 
     render json: { error: 'wrong restaurant params' }
-  end
-
-  def update
-    authorize @restaurant
-    response = { error: 'wrong restaurant params' }
-
-    response = @restaurant if @restaurant.update(restaurant_params)
-
-    render json: response
   end
 
   def destroy
