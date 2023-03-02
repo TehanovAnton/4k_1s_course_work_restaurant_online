@@ -23,12 +23,10 @@ class RestaurantsController < DefaultController
   end
 
   def destroy
-    authorize @restaurant
-    response = @restaurant
+    authorize authorizable_instance(:destroy)
 
-    response = { error: 'wrong restaurant params' } unless @restaurant.destroy
-
-    render json: response
+    destroy_service = destroy_service_class.new(@model)
+    render(**destroy_service.destroy)
   end
 
   private
@@ -53,9 +51,5 @@ class RestaurantsController < DefaultController
 
     update_auth_header
     render json: { error: 'wrong restaurant params' } unless @restaurant
-  end
-
-  def restaurant_params
-    params.require(:restaurant).permit(:name, :email, :address)
   end
 end

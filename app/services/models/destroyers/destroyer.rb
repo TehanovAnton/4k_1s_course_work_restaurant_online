@@ -6,14 +6,6 @@ module Models
       def destroy
         raise NotImplementedError, 'Method should be implemented'
       end
-
-      def model_class
-        raise NotImplementedError, 'Method should be implemented'
-      end
-
-      def model_serializer
-        raise NotImplementedError, 'Method should be implemented'
-      end
     end
 
     class Destroyer
