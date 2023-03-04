@@ -1,5 +1,7 @@
 module Authorization::OrdersAuthorizationApi
   ACTIONS = %i[can_update? can_destroy? can_create?]
+  MODEL_AUTH_ACTIONS = %i[can_update? can_destroy?].freeze
+  MODEL_AUTH_CREATE_ACTION = %i[can_create?].freeze
 
   def can_update?
     render json: @authorizer.update?

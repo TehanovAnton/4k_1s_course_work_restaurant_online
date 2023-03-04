@@ -1,6 +1,11 @@
-class OrdersController < ApplicationController
+class OrdersController < DefaultController
   before_action :authenticate_user!
-  before_action :set_order, only: %i[update destroy show can_update? can_update? can_destroy? cancel post_rating
+
+  before_action :set_model, only: %i[update
+                                     destroy
+                                     show].concat(Authorization::OrdersAuthorizationApi::MODEL_AUTH_ACTIONS)
+
+  before_action :set_order, only: %i[update destroy show cancel post_rating
                                      destroy_rating post_message delete_message order_messages]
   before_action :set_user, only: %i[index create can_create?]
   before_action :set_message, only: %i[delete_message]
@@ -27,22 +32,7 @@ class OrdersController < ApplicationController
     render json: { error: 'wrong order params' }
   end
 
-  def create
-    @order = Order.new(order_params)
-
-    @order.messages << Message.new(message_params) 
-    if @order.save
-      Notifications::Orders::Confirmation.new(order: @order, customer: current_user).call
-
-      Notifications::Orders::ReminderWorker.perform_at(@order.reservations.first.start_at - 1.day, @order.id)
-      Notifications::Orders::ReminderWorker.perform_at(@order.reservations.first.start_at - 12.hours, @order.id)
-      Notifications::Orders::ReminderWorker.perform_at(@order.reservations.first.start_at - 1.hour, @order.id)
-
-      return render json: OrderBlueprint.render(@order)
-    end
-
-    render json: { error: @order.errors.full_messages }
-  end
+  # TODO: Inlcude Notification to Default controller
 
   def update
     authorize @order
@@ -73,7 +63,7 @@ class OrdersController < ApplicationController
 
     response = @order
 
-    Notifications::Orders::Cancellation.new(order: @order, customer: current_user).call
+    # Notifications::Orders::Cancellation.new(order: @order, customer: current_user).call
 
     response = { error: 'wrong order params' } unless @order.destroy
 
@@ -87,6 +77,21 @@ class OrdersController < ApplicationController
   end
 
   private
+
+  class << self
+    def model_class
+      Order
+    end
+  end
+
+  def authorizable_instance(action)
+    case action
+    when :create
+      self.class.model_class
+    when :update, :destroy
+      @model
+    end
+  end
 
   def set_user
     @user = User.find_by(id: params[:user_id])

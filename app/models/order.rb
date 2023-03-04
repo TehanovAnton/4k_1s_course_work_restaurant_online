@@ -6,9 +6,12 @@ class Order < ApplicationRecord
     { orders_dishes_attributes: %i[dish_id] },
     { reservations_attributes: %i[table_id start_at end_at place_type] }
   ]
+  MODEL_SERIALIZER_CLASS = OrderBlueprint
+  MODEL_UPDATER_CLASS = Models::Updaters::Updater
+  MODEL_CREATER_CLASS = Models::Creaters::Creater
+  MODEL_DESTROYER_CLASS = Models::Destroyers::Destroyer
 
   include Validations::Order::OrderValidation
-
   include AASM
 
   aasm do

@@ -14,7 +14,5 @@ class Reservation < ApplicationRecord
 
   enum place_type: %i[inside outside]
 
-  accepts_nested_attributes_for :order
-
   delegate :admins, to: :order
 end
