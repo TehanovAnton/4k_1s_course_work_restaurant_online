@@ -34,20 +34,6 @@ class OrdersController < DefaultController
 
   # TODO: Inlcude Notification to Default controller
 
-  def update
-    authorize @order
-
-    if Order.new(order_params).valid?
-      @order.dishes.delete_all
-      @order.reservations.delete_all
-
-      @order.update(order_params)
-      return render json: OrderBlueprint.render(@order)
-    end
-
-    render json: @order.errors.full_messages
-  end
-
   def post_rating
     @order.rating = Rating.new(rating_params)
 
@@ -59,15 +45,10 @@ class OrdersController < DefaultController
   end
 
   def destroy
-    authorize @order
+    authorize authorizable_instance(:destroy)
 
-    response = @order
-
-    # Notifications::Orders::Cancellation.new(order: @order, customer: current_user).call
-
-    response = { error: 'wrong order params' } unless @order.destroy
-
-    render json: response
+    destroy_service = destroy_service_class.new(@model)
+    render(**destroy_service.destroy)
   end
 
   def cancel

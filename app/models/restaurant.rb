@@ -4,7 +4,7 @@ class Restaurant < ApplicationRecord
   MODEL_SERIALIZER_CLASS = RestaurantBlueprint
   MODEL_UPDATER_CLASS = Models::Updaters::Updater
   MODEL_CREATER_CLASS = Models::Creaters::Creater
-  MODEL_DESTROYER_CLASS = Models::Destroyers::RestaurantDestroyer
+  MODEL_DESTROYER_CLASS = Models::Destroyers::ModelResponseDestroyer
 
   include Validations::RestaurantValidation
 

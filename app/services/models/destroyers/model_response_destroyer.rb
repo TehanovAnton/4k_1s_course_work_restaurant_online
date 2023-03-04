@@ -1,6 +1,6 @@
 module Models
   module Destroyers
-    module RestaurantDestroyerRequieredMethods
+    module ModelResponseDestroyerMethods
       def model_class
         raise NotImplementedError, 'Method should be implemented'
       end
@@ -10,8 +10,10 @@ module Models
       end
     end
 
-    class RestaurantDestroyer < Destroyer
+    class ModelResponseDestroyer < Destroyer
       attr_reader :model, :model_json
+
+      include ModelResponseDestroyerMethods
 
       def initialize(model)
         super()
