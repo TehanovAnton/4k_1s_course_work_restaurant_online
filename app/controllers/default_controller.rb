@@ -1,5 +1,22 @@
+module DefaultControllerRequeredMethods
+  module InstanceMethods
+    def authorizable_instance(action)
+      rais NotImplementedError, 'Model controller should provide authorizable_instance method'
+    end
+  end
+
+  module ClassMethods
+    def model_class
+      raise NotImplementedError, 'Model controller should provide model class'
+    end
+  end
+end
+
 class DefaultController < ApplicationController
   before_action :authenticate_user!
+
+  extend DefaultControllerRequeredMethods::ClassMethods
+  include DefaultControllerRequeredMethods::InstanceMethods
 
   def create
     authorize authorizable_instance(:create)
@@ -23,12 +40,6 @@ class DefaultController < ApplicationController
   end
 
   private
-
-  class << self
-    def model_class
-      raise NotImplementedError, 'Model controller should provide model class'
-    end
-  end
 
   def set_model
     @model = model_class.find_by(id: params[:id])
@@ -59,9 +70,5 @@ class DefaultController < ApplicationController
 
   def destroy_service_class
     model_class::MODEL_DESTROYER_CLASS
-  end
-
-  def authorizable_instance(action)
-    rais NotImplementedError, 'Action should have authorizable_instance method'
   end
 end

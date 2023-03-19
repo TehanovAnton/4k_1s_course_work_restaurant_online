@@ -1,8 +1,8 @@
-class RestaurantsController < ApplicationController
+class RestaurantsController < DefaultController
   before_action :authenticate_user!
-  before_action :set_restaurant, only: %i[update destroy show can_update? can_destroy? post_message delete_message
-                                          restaurant_messages]
-  before_action :set_message, only: %i[delete_message]
+  before_action :set_model, only: %i[update
+                                     destroy
+                                     show].concat(Authorization::RestaurantsAuthorizationApi::MODEL_AUTH_ACTIONS)
   before_action :set_authorizer, only: Authorization::RestaurantsAuthorizationApi::ACTIONS
 
   include Authorization::RestaurantsAuthorizationApi
@@ -22,46 +22,34 @@ class RestaurantsController < ApplicationController
     render json: { error: 'wrong restaurant params' }
   end
 
-  def create
-    authorize Restaurant
-
-    @restaurant = Restaurant.new(restaurant_params)
-    if @restaurant.save
-      @restaurant.admins << current_user
-      return render json: @restaurant
-    end
-
-    render json: { error: 'wrong restaurant params' }
-  end
-
-  def update
-    authorize @restaurant
-    response = { error: 'wrong restaurant params' }
-
-    response = @restaurant if @restaurant.update(restaurant_params)
-
-    render json: response
-  end
-
   def destroy
-    authorize @restaurant
-    response = @restaurant
+    authorize authorizable_instance(:destroy)
 
-    response = { error: 'wrong restaurant params' } unless @restaurant.destroy
-
-    render json: response
+    destroy_service = destroy_service_class.new(@model)
+    render(**destroy_service.destroy)
   end
 
   private
+
+  class << self
+    def model_class
+      Restaurant
+    end
+  end
+
+  def authorizable_instance(action)
+    case action
+    when :create
+      self.class.model_class
+    when :update, :destroy
+      @model
+    end
+  end
 
   def set_restaurant
     @restaurant = Restaurant.includes(:own_messages).find_by(id: params[:id])
 
     update_auth_header
     render json: { error: 'wrong restaurant params' } unless @restaurant
-  end
-
-  def restaurant_params
-    params.require(:restaurant).permit(:name, :email, :address)
   end
 end

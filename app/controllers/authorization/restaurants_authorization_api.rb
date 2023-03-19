@@ -1,6 +1,7 @@
-
 module Authorization::RestaurantsAuthorizationApi
-  ACTIONS = %i[can_create? can_update? can_destroy?]
+  ACTIONS = %i[can_create? can_update? can_destroy?].freeze
+  MODEL_AUTH_ACTIONS = %i[can_update? can_destroy?].freeze
+  MODEL_AUTH_CREATE_ACTION = %i[can_create?].freeze
 
   def can_create?
     render json: @authorizer.create?

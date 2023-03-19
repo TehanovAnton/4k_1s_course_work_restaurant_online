@@ -5,7 +5,7 @@ class Menu < ApplicationRecord
   MODEL_CREATER_CLASS = Models::Creaters::Creater
   MODEL_DESTROYER_CLASS = Models::Destroyers::Destroyer
 
-  include Validations::Menu::MenuValidation
+  include Validations::MenuValidation::Validation
 
   has_many :dishes, dependent: :destroy
   belongs_to :restaurant
