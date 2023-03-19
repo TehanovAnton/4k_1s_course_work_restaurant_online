@@ -3,7 +3,7 @@ class Menu < ApplicationRecord
   MODEL_SERIALIZER_CLASS = MenuBlueprint
   MODEL_UPDATER_CLASS = Models::Updaters::Updater
   MODEL_CREATER_CLASS = Models::Creaters::Creater
-  MODEL_DESTROYER_CLASS = Models::Destroyers::Destroyer
+  MODEL_DESTROYER_CLASS = Models::Destroyers::ModelResponseDestroyer
 
   include Validations::MenuValidation::Validation
 

@@ -13,10 +13,18 @@ class DishesController < DefaultController
   end
 
   def show
-    return render json: @dish
+    return render json: model_class::MODEL_SERIALIZER_CLASS.render(@model)
 
     render json: { error: 'wrong dish params' }
   end
+
+  def destroy
+    authorize authorizable_instance(:destroy)
+
+    destroy_service = destroy_service_class.new(@model)
+    render(**destroy_service.destroy)
+  end
+
 
   private
 
