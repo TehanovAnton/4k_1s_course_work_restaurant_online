@@ -37,7 +37,9 @@ module Validations
       end
 
       def name_already_exists?
-        @names.include?(@record.name)
+        !@names.select do |id, name|
+          name == @record.name && @record.id != id
+        end.empty?
       end
 
       def validator_message

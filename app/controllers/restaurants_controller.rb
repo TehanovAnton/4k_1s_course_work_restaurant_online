@@ -17,7 +17,7 @@ class RestaurantsController < DefaultController
   end
 
   def show
-    return render json: RestaurantBlueprint.render(@restaurant)
+    return render json: RestaurantBlueprint.render(@model)
 
     render json: { error: 'wrong restaurant params' }
   end

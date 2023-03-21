@@ -17,6 +17,13 @@ class MenusController < DefaultController
     render json: MenuBlueprint.render(@model, view: :with_dishes)
   end
 
+  def destroy
+    authorize authorizable_instance(:destroy)
+
+    destroy_service = destroy_service_class.new(@model)
+    render(**destroy_service.destroy)
+  end
+
   private
 
   class << self

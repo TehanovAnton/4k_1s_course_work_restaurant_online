@@ -10,4 +10,8 @@ class DishPolicy < ApplicationPolicy
   def destroy?
     super_admin? || record.admins.include?(user)
   end
+
+  def attache_image?
+    super_admin? || record.admins.include?(user)
+  end
 end
