@@ -6,9 +6,11 @@ class DishBlueprint < Blueprinter::Base
 
   identifier :id
 
-  fields :name
-  field :image do |dish|
-    APP_URL + Rails.application.routes.url_helpers.rails_blob_path(dish.image, only_path: true)
+  fields :name, :price_cents, :price_currency
+
+  field :image, if: ->(_, dish, _) { dish.image.attached? } do |dish|
+    image_path = Rails.application.routes.url_helpers.rails_blob_path(dish.image, only_path: true)
+    APP_URL + image_path
   end
 
   view :with_menus do
