@@ -1,7 +1,8 @@
 class DishesController < DefaultController
   before_action :set_model, only: %i[update
                                      destroy
-                                     show].concat(Authorization::DishesAuthorizationApi::MODEL_AUTH_ACTIONS)
+                                     show
+                                     attache_image].concat(Authorization::DishesAuthorizationApi::MODEL_AUTH_ACTIONS)
   before_action :set_menu, only: %i[index
                                     create].concat(Authorization::DishesAuthorizationApi::MODEL_AUTH_CREATE_ACTION)
 
@@ -25,6 +26,12 @@ class DishesController < DefaultController
     render(**destroy_service.destroy)
   end
 
+  def attache_image
+    authorize authorizable_instance(:update)
+
+    attacher_service = attacher_service_class.new(@model, params[:image])
+    render(**attacher_service.attach)
+  end
 
   private
 
@@ -32,6 +39,10 @@ class DishesController < DefaultController
     def model_class
       Dish
     end
+  end
+
+  def attacher_service_class
+    model_class::MODEL_ATTACHER_CLASS
   end
 
   def set_menu

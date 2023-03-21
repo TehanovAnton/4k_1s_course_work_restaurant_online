@@ -41,7 +41,6 @@ Rails.application.routes.draw do
   resources :restaurants do
     resources :menus, shallow: true do
       resources :dishes, shallow: true do
-
         collection do
           get :can_create, to: 'dishes#can_create?'
         end
@@ -49,6 +48,7 @@ Rails.application.routes.draw do
         member do
           get :can_update, to: 'dishes#can_update?'
           get :can_destroy, to: 'dishes#can_destroy?'
+          put :attache_image, to: 'dishes#attache_image'
         end
       end
 
