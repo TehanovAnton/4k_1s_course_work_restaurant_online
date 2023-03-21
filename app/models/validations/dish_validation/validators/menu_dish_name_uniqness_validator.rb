@@ -13,8 +13,8 @@ module Validations
         def find_names
           @names = Dish.joins(:menu)
                        .where(menu_id: @record.menu_id)
-                       .select(:name)
-                       .pluck(:name)
+                       .select(:id, :name)
+                       .pluck(:id, :name)
         end
       end
     end
