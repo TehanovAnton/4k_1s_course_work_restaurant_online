@@ -31,6 +31,8 @@ gem 'bootsnap', '>= 1.4.4', require: false
 
 gem 'image_processing', '~> 1.12', '>= 1.12.2'
 
+gem 'money-rails', '~>1.12'
+
 group :development, :test do
   gem 'pry', '~> 0.14.1'
   gem 'pry-nav'
