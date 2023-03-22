@@ -1,11 +1,12 @@
+# frozen_string_literal:true
 
 class Order < ApplicationRecord
   PARAMS = [
     :user_id,
     :restaurant_id,
-    { orders_dishes_attributes: %i[dish_id] },
-    { reservations_attributes: %i[table_id start_at end_at place_type] }
-  ]
+    { orders_dishes_attributes: %i[id dish_id] },
+    { reservation_attributes: %i[table_id start_at end_at place_type] }
+  ].freeze
   MODEL_SERIALIZER_CLASS = OrderBlueprint
   MODEL_UPDATER_CLASS = Models::Updaters::Updater
   MODEL_CREATER_CLASS = Models::Creaters::Creater
@@ -31,8 +32,8 @@ class Order < ApplicationRecord
   has_many :orders_dishes, dependent: :destroy
   has_many :dishes, through: :orders_dishes
 
-  has_many :reservations, dependent: :destroy
-  has_many :tables, through: :reservations
+  has_one :reservation, dependent: :destroy
+  has_one :table, through: :reservation
 
   has_many :menus, through: :dishes
   has_many :messages, as: :messageble
@@ -41,7 +42,7 @@ class Order < ApplicationRecord
   belongs_to :restaurant
   belongs_to :user
 
-  accepts_nested_attributes_for :reservations
+  accepts_nested_attributes_for :reservation
   accepts_nested_attributes_for :orders_dishes
 
   delegate :admins, to: :restaurant
