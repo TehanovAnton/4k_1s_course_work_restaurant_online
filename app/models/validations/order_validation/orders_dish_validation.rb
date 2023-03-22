@@ -6,7 +6,7 @@ module Validations
       included do
         validates :dish_id, presence: true
 
-        validates_with Order::Validators::OrderRestaurantDishPresenceValidator
+        validates_with OrderValidation::Validators::OrderRestaurantDishPresenceValidator
       end
     end
   end
