@@ -12,7 +12,7 @@ class Order < ApplicationRecord
   MODEL_CREATER_CLASS = Models::Creaters::Creater
   MODEL_DESTROYER_CLASS = Models::Destroyers::ModelResponseDestroyer
 
-  include Validations::Order::OrderValidation
+  include Validations::OrderValidation::Validation
   include AASM
 
   aasm do

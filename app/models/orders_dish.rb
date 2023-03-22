@@ -1,5 +1,5 @@
 class OrdersDish < ApplicationRecord
-  include Validations::Order::OrdersDishValidation
+  include Validations::OrderValidation::OrdersDishValidation
 
   belongs_to :order
   belongs_to :dish

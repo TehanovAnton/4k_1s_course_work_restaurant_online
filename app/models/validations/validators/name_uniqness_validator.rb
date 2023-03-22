@@ -15,6 +15,7 @@ module Validations
     class NameUniqnessValidator < ActiveModel::Validator
       include NameUniqnessValidatorRequiredMethods
 
+      # TODO: useless const
       MESSAGE = 'Menu with the same name already exists in restaurant.'.freeze
 
       def validate(record)
