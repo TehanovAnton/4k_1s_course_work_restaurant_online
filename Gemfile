@@ -37,6 +37,7 @@ group :development, :test do
   gem 'pry', '~> 0.14.1'
   gem 'pry-nav'
   gem 'pry-remote'
+  gem 'database_cleaner-active_record'
 
   gem 'factory_bot_rails'
 end

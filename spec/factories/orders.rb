@@ -1,3 +1,5 @@
+# frozen_literal_string:true
+
 FactoryBot.define do
   factory :order do
     user_id {}
@@ -15,6 +17,8 @@ FactoryBot.define do
         end
 
         order.reload
+
+        binding.pry
       end
     end
   end

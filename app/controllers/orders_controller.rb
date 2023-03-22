@@ -75,7 +75,7 @@ class OrdersController < DefaultController
   end
 
   def set_user
-    @user = User.find_by(id: params[:user_id])
+    @user = User.find_by(id: params[:order][:user_id])
 
     update_auth_header
     render json: { error: 'wrong action params' } unless @user

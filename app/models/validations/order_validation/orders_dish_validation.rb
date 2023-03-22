@@ -1,5 +1,5 @@
 module Validations
-  module Order
+  module OrderValidation
     module OrdersDishValidation
       extend ActiveSupport::Concern
 

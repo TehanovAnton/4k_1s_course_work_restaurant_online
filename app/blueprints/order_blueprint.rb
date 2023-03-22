@@ -9,7 +9,7 @@ class OrderBlueprint < Blueprinter::Base
   association :user, blueprint: UserBlueprint
   association :menus, blueprint: MenuBlueprint
   association :restaurant, blueprint: RestaurantBlueprint
-  association :reservations, blueprint: ReservationBlueprint
-  association :tables, blueprint: TableBlueprint
+  association :reservation, blueprint: ReservationBlueprint
+  association :table, blueprint: TableBlueprint
   association :messages, blueprint: MessageBlueprint
 end
