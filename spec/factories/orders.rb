@@ -17,8 +17,6 @@ FactoryBot.define do
         end
 
         order.reload
-
-        binding.pry
       end
     end
   end

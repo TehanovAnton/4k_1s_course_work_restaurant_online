@@ -33,8 +33,8 @@ module Validations
 
         def time_not_cover_other_reservation?
           condition = table.reservations.none? do |reservation|
-            between?(reservation.start_at, reservation.start_at, reservation.end_at) ||
-              between?(reservation.end_at, reservation.start_at, reservation.end_at)
+            between?(record.start_at, reservation.start_at, reservation.end_at) ||
+              between?(record.end_at, reservation.start_at, reservation.end_at)
           end
 
           record.errors.add :base, 'It seems ypur time covers other reservations' unless condition

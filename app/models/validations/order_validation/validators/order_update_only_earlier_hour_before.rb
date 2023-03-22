@@ -19,7 +19,6 @@ module Validations
         private
 
         def update_less_than_hour_before?
-          binding.pry
           (now - start_at) <= 1.hour
         end
 
