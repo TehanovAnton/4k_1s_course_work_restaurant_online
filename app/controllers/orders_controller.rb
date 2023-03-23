@@ -44,6 +44,18 @@ class OrdersController < DefaultController
     render json: @order.rating.destroy
   end
 
+  def update
+    authorize authorizable_instance(:update)
+
+    determinant_class = Validations::Determinants::OnOrderDishDeterminant
+    updater_service = updater_service_class.new(model: @model,
+                                                model_class:,
+                                                params: model_params,
+                                                on_validation_determinant_class: determinant_class,
+                                                params_filter: model_class::ORDER_DISHES_PARAMS)
+    render(**updater_service.update)
+  end
+
   def destroy
     authorize authorizable_instance(:destroy)
 
