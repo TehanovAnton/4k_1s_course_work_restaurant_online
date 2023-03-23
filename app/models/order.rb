@@ -14,27 +14,13 @@ class Order < ApplicationRecord
   MODEL_DESTROYER_CLASS = Models::Destroyers::ModelResponseDestroyer
 
   include Validations::OrderValidation::Validation
-  include AASM
-
-  aasm do
-    state :active, initial: true
-    state :canceled
-    state :completed
-
-    event :cancel do
-      transitions from: :active, to: :canceled
-    end
-
-    event :complete do
-      transitions from: :active, to: :completed
-    end
-  end
 
   has_many :orders_dishes, dependent: :destroy
   has_many :dishes, through: :orders_dishes
 
   has_one :reservation, dependent: :destroy
   has_one :table, through: :reservation
+  has_one :order_state
 
   has_many :menus, through: :dishes
   has_many :messages, as: :messageble
