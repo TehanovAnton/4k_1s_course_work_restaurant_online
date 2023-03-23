@@ -10,7 +10,8 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_03_21_170219) do
+ActiveRecord::Schema.define(version: 2023_03_23_135037) do
+
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -71,6 +72,14 @@ ActiveRecord::Schema.define(version: 2023_03_21_170219) do
     t.string "messageble_type", null: false
     t.index ["restaurant_id"], name: "index_messages_on_restaurant_id"
     t.index ["user_id"], name: "index_messages_on_user_id"
+  end
+
+  create_table "order_states", force: :cascade do |t|
+    t.string "aasm_state"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "order_id"
+    t.index ["order_id"], name: "index_order_states_on_order_id"
   end
 
   create_table "orders", force: :cascade do |t|
