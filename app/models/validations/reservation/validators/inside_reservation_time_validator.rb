@@ -13,9 +13,15 @@ module Validations
           @table = record.table
 
           start_earlier_than_end?
+          start_earlier_than_now?
           time_not_in_other_reservation?(start_at)
           time_not_in_other_reservation?(end_at)
           time_not_cover_other_reservation?
+        end
+
+        def start_earlier_than_now?
+          condition = start_at > Time.now
+          record.errors.add :base, "Reservation start time can't be earlier than now." unless condition
         end
 
         def start_earlier_than_end?

@@ -19,15 +19,15 @@ module Validations
         private
 
         def update_less_than_hour_before?
-          (now - start_at) <= 1.hour
+          (start_at.localtime - now.localtime) <= 1.hour
         end
 
         def now
-          @now ||= Time.now
+          @now = Time.now
         end
 
         def start_at
-          @start_at ||= old_record.reservation.start_at
+          @start_at = old_record.reservation.start_at
         end
       end
     end
