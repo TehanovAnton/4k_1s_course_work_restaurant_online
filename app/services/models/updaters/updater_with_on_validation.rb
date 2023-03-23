@@ -13,8 +13,9 @@ module Models
       end
 
       def update
-        return { json: model.errors.messages, status: :bad_request } unless valid? || model.update(**params)
+        return { json: model.errors.messages, status: :bad_request } unless valid?
 
+        model.save
         { json: model_serializer.render(model) }
       end
 

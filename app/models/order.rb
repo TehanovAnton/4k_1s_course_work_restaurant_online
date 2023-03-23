@@ -6,7 +6,7 @@ class Order < ApplicationRecord
     :user_id,
     :restaurant_id,
     ORDER_DISHES_PARAMS,
-    { reservation_attributes: %i[table_id start_at end_at place_type] }
+    { reservation_attributes: %i[id table_id start_at end_at place_type] }
   ].freeze
   MODEL_SERIALIZER_CLASS = OrderBlueprint
   MODEL_UPDATER_CLASS = Models::Updaters::UpdaterWithOnValidation
