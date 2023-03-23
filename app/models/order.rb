@@ -20,7 +20,7 @@ class Order < ApplicationRecord
 
   has_one :reservation, dependent: :destroy
   has_one :table, through: :reservation
-  has_one :order_state
+  has_one :order_state, dependent: :destroy
 
   has_many :menus, through: :dishes
   has_many :messages, as: :messageble
