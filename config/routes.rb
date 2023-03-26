@@ -80,6 +80,10 @@ Rails.application.routes.draw do
   end
 
   namespace :cooks do
+    resources :restaurants, only: [] do
+      resources :orders, only: [:index]
+    end
+
     put 'order_states/:id/transition', to: 'order_states#transition'
   end
 end

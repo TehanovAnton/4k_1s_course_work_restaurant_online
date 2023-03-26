@@ -9,7 +9,7 @@ module Cooks
     before_action :set_model, :set_transition_name
 
     def transition
-      authorize authorizable_instance(:transition)
+      authorize [:cooks, authorizable_instance(:transition)]
 
       transitor = transition_servive_class.new(@model, @transition_name)
       render(**transitor.transit)
