@@ -1,6 +1,9 @@
 # frozen_string_literal:true
 
 class OrderState < ApplicationRecord
+  TRANSITION_SERVICE_CLASS = Transitors::Transitor
+  MODEL_SERIALIZER_CLASS = ''
+
   belongs_to :order
 
   include AASM

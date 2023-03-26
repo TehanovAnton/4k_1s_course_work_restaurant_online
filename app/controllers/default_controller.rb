@@ -1,22 +1,43 @@
-module DefaultControllerRequeredMethods
-  module InstanceMethods
-    def authorizable_instance(action)
-      rais NotImplementedError, 'Model controller should provide authorizable_instance method'
-    end
-  end
-
-  module ClassMethods
-    def model_class
-      raise NotImplementedError, 'Model controller should provide model class'
-    end
-  end
-end
+# frozen_string_literal: true
 
 class DefaultController < ApplicationController
+  module RequeredMethods
+    module InstanceMethods
+      def authorizable_instance(action)
+        rais NotImplementedError, 'Model controller should provide authorizable_instance method'
+      end
+
+      def model_class
+        self.class.model_class
+      end
+
+      def model_params
+        params.require(model_scope).permit(model_class::PARAMS)
+      end
+
+      def model_scope
+        model_class.name.downcase.to_sym
+      end
+
+      def set_model
+        @model = model_class.find_by(id: params[:id])
+
+        update_auth_header
+        render json: { error: 'wrong menu params' } unless @model
+      end
+    end
+
+    module ClassMethods
+      def model_class
+        raise NotImplementedError, 'Model controller should provide model class'
+      end
+    end
+  end
+
   before_action :authenticate_user!
 
-  extend DefaultControllerRequeredMethods::ClassMethods
-  include DefaultControllerRequeredMethods::InstanceMethods
+  extend RequeredMethods::ClassMethods
+  include RequeredMethods::InstanceMethods
 
   def create
     authorize authorizable_instance(:create)
@@ -40,25 +61,6 @@ class DefaultController < ApplicationController
   end
 
   private
-
-  def set_model
-    @model = model_class.find_by(id: params[:id])
-
-    update_auth_header
-    render json: { error: 'wrong menu params' } unless @model
-  end
-
-  def model_class
-    self.class.model_class
-  end
-
-  def model_params
-    params.require(model_scope).permit(model_class::PARAMS)
-  end
-
-  def model_scope
-    model_class.name.downcase.to_sym
-  end
 
   def updater_service_class
     model_class::MODEL_UPDATER_CLASS
