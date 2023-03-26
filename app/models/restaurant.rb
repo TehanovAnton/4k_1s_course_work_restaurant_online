@@ -19,4 +19,7 @@ class Restaurant < ApplicationRecord
 
   has_many :restaurants_admins, dependent: :destroy
   has_many :admins, through: :restaurants_admins
+
+  has_many :restaurants_cooks, dependent: :destroy
+  has_many :cooks, through: :restaurants_cooks
 end

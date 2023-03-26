@@ -8,7 +8,6 @@ class OrderStatesController < ApplicationController
   before_action :set_model, :set_transition_name
 
   def transition
-    binding.pry
     authorize authorizable_instance(:transition)
 
     transitor = transition_servive_class.new(@model, @transition_name)
