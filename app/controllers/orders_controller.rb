@@ -1,3 +1,5 @@
+# frozen_string_literal:true
+
 class OrdersController < DefaultController
   before_action :authenticate_user!
 
