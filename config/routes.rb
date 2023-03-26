@@ -39,6 +39,8 @@ Rails.application.routes.draw do
   end
 
   resources :restaurants do
+    resources :orders
+
     resources :menus, shallow: true do
       resources :dishes, shallow: true do
         collection do
@@ -77,7 +79,7 @@ Rails.application.routes.draw do
     end
   end
 
-  scope '/cook' do
+  namespace :cooks do
     put 'order_states/:id/transition', to: 'order_states#transition'
   end
 end
