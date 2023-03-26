@@ -4,10 +4,12 @@ class OrderStatesController < ApplicationController
   include DefaultController::RequeredMethods::InstanceMethods
   extend DefaultController::RequeredMethods::ClassMethods
 
+  before_action :authenticate_user!
   before_action :set_model, :set_transition_name
 
   def transition
-    # authorize authorizable_instance
+    binding.pry
+    authorize authorizable_instance(:transition)
 
     transitor = transition_servive_class.new(@model, @transition_name)
     render(**transitor.transit)
