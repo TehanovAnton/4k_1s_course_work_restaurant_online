@@ -76,4 +76,8 @@ Rails.application.routes.draw do
       delete :delete_message, to: 'restaurants#delete_message'
     end
   end
+
+  scope '/cook' do
+    put 'order_states/:id/transition', to: 'order_states#transition'
+  end
 end
