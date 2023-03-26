@@ -1,4 +1,4 @@
-# frosen_string_literal: true
+# frozen_string_literal:true
 
 module Transitors
   class Transitor
@@ -14,7 +14,7 @@ module Transitors
       return { json: 'can not run transition', status: :unprocessable_entity } unless run_transit?
 
       run_transit
-      { json: 'ok' }
+      { json: model_serializer.render(model) }
     end
 
     private

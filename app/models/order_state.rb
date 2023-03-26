@@ -2,7 +2,7 @@
 
 class OrderState < ApplicationRecord
   TRANSITION_SERVICE_CLASS = Transitors::Transitor
-  MODEL_SERIALIZER_CLASS = ''
+  MODEL_SERIALIZER_CLASS = OrderStateBlueprint
 
   belongs_to :order
 
