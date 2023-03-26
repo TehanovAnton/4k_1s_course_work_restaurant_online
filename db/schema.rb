@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_03_23_135037) do
+ActiveRecord::Schema.define(version: 2023_03_26_092957) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -139,6 +139,15 @@ ActiveRecord::Schema.define(version: 2023_03_23_135037) do
     t.index ["user_id"], name: "index_restaurants_admins_on_user_id"
   end
 
+  create_table "restaurants_cooks", force: :cascade do |t|
+    t.bigint "restaurant_id"
+    t.bigint "user_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["restaurant_id"], name: "index_restaurants_cooks_on_restaurant_id"
+    t.index ["user_id"], name: "index_restaurants_cooks_on_user_id"
+  end
+
   create_table "tables", force: :cascade do |t|
     t.integer "number", null: false
     t.datetime "created_at", precision: 6, null: false
@@ -190,5 +199,7 @@ ActiveRecord::Schema.define(version: 2023_03_23_135037) do
   add_foreign_key "reservations", "tables"
   add_foreign_key "restaurants_admins", "restaurants"
   add_foreign_key "restaurants_admins", "users"
+  add_foreign_key "restaurants_cooks", "restaurants"
+  add_foreign_key "restaurants_cooks", "users"
   add_foreign_key "tables", "restaurants"
 end
