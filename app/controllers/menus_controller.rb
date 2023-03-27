@@ -1,4 +1,4 @@
-class MenusController < DefaultController
+class MenusController < Default::Controller
   before_action :set_model, only: %i[update
                                      destroy
                                      show].concat(Authorization::MenusAuthorizationApi::MODEL_AUTH_ACTIONS)

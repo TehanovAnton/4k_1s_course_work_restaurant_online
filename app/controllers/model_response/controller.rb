@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module ModelResponse
-  class Controller < DefaultController
+  class Controller < Default::Controller
     def destroy
       authorize authorizable_instance(:destroy)
 

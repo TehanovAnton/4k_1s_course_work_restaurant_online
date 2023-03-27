@@ -1,4 +1,4 @@
-class DishesController < DefaultController
+class DishesController < Default::Controller
   before_action :set_model, only: %i[update
                                      destroy
                                      show

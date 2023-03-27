@@ -2,8 +2,8 @@
 
 module Cooks
   class OrderStatesController < ApplicationController
-    include DefaultController::RequeredMethods::InstanceMethods
-    extend DefaultController::RequeredMethods::ClassMethods
+    include Default::ControllerRequiredMethods::InstanceMethods
+    extend Default::ControllerRequiredMethods::ClassMethods
 
     before_action :authenticate_user!
     before_action :set_model, :set_transition_name
