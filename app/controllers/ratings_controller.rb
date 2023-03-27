@@ -19,6 +19,8 @@ class RatingsController < DefaultController
     case action
     when :create
       Rating
+    when :update
+      @model
     end
   end
 end
