@@ -7,6 +7,13 @@ class RatingsController < DefaultController
                                      destroy
                                      show]
 
+  def destroy
+    authorize authorizable_instance(:destroy)
+
+    destroy_service = destroy_service_class.new(@model)
+    render(**destroy_service.destroy)
+  end
+
   private
 
   class << self
@@ -19,7 +26,7 @@ class RatingsController < DefaultController
     case action
     when :create
       Rating
-    when :update
+    when :update, :destroy
       @model
     end
   end
