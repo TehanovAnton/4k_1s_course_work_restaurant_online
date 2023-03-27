@@ -7,5 +7,7 @@ class Rating < ApplicationRecord
   MODEL_DESTROYER_CLASS = Models::Destroyers::ModelResponse::Destroyer
   MODEL_SERIALIZER_CLASS = RatingBlueprint
 
+  include Validations::Ratings::Validation
+
   belongs_to :order
 end
