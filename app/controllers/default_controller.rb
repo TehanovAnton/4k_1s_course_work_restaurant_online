@@ -3,7 +3,7 @@
 class DefaultController < ApplicationController
   module RequeredMethods
     module InstanceMethods
-      def authorizable_instance(action)
+      def authorizable_instance(_action)
         rais NotImplementedError, 'Model controller should provide authorizable_instance method'
       end
 
