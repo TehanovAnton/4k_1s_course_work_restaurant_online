@@ -11,7 +11,7 @@ class Reservation < ApplicationRecord
   include Validations::Reservations::Validation
 
   belongs_to :table, optional: true
-  belongs_to :order
+  belongs_to :order, optional: true
 
   enum place_type: %i[inside outside]
 

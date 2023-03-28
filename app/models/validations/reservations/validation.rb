@@ -7,6 +7,7 @@ module Validations
 
       included do
         validates :table_id, presence: true, if: :inside?
+        validates :start_at, presence: true
 
         validates_with Validators::InsideReservationTimeValidator
       end
