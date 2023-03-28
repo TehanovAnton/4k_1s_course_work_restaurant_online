@@ -1,6 +1,8 @@
+# frozen_string_literal:true
+
 module Validations
-  module Reservation
-    module ReservationValidation
+  module Reservations
+    module Validation
       extend ActiveSupport::Concern
 
       included do

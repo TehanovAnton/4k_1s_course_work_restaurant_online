@@ -8,7 +8,7 @@ class Reservation < ApplicationRecord
     :place_type
   ].freeze
 
-  include Validations::Reservation::ReservationValidation
+  include Validations::Reservations::Validation
 
   belongs_to :table, optional: true
   belongs_to :order
