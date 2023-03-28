@@ -13,7 +13,7 @@ module Models
     end
 
     class Creater
-      attr_reader :params, :model_class
+      attr_reader :params, :model_class, :model
 
       include CreaterRequiredMethods
 
