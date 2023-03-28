@@ -11,11 +11,6 @@ module Default
       authorize authorizable_instance(:create)
 
       creater_service = creater_service_class.new(model_class, model_params)
-      response = creater_service.create
-      @model = creater_service.model
-
-      binding.pry
-      OrderMailer.with(user: current_user, order: @model).order_created.deliver_later
       render(**creater_service.create)
     end
 
@@ -45,6 +40,10 @@ module Default
 
     def destroy_service_class
       model_class::MODEL_DESTROYER_CLASS
+    end
+
+    def notify_service_class
+      model_class::NOTIFIER_CLASS
     end
   end
 end

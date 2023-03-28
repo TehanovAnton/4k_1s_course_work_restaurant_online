@@ -13,21 +13,24 @@ module Models
     end
 
     class Creater
-      attr_reader :params, :model_class, :model
+      attr_reader :params, :model_class, :model, :response
 
       include CreaterRequiredMethods
 
       def initialize(model_class, params)
         @params = params
         @model_class = model_class
+        @response = {}
       end
 
       def create
         @model = model_class.new(**params)
-
-        return { json: @model.errors.messages, status: :unprocessable_entity } unless @model.save
-
-        { json: model_serializer.render(@model) }
+        @response =
+          if @model.save
+            { json: model_serializer.render(@model) }
+          else
+            { json: @model.errors.messages, status: :unprocessable_entity }
+          end
       end
 
       def model_serializer

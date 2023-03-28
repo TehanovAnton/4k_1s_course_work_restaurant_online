@@ -1,14 +1,9 @@
 # frozen_string_literal:true
 
-class OrdersController < Default::Controller
-  before_action :authenticate_user!
-
+class OrdersController < Notify::Controller
   before_action :set_model, only: %i[update
                                      destroy
                                      show].concat(Authorization::OrdersAuthorizationApi::MODEL_AUTH_ACTIONS)
-
-  before_action :set_order, only: %i[update destroy show cancel post_rating
-                                     destroy_rating post_message delete_message order_messages]
   before_action :set_user, only: %i[index create can_create?]
   before_action :set_message, only: %i[delete_message]
   before_action :set_authorizer, only: Authorization::OrdersAuthorizationApi::ACTIONS
@@ -34,18 +29,6 @@ class OrdersController < Default::Controller
     render json: { error: 'wrong order params' }
   end
 
-  # TODO: Inlcude Notification to Default controller
-
-  def post_rating
-    @order.rating = Rating.new(rating_params)
-
-    render json: @order.rating
-  end
-
-  def destroy_rating
-    render json: @order.rating.destroy
-  end
-
   def update
     authorize authorizable_instance(:update)
 
@@ -56,13 +39,6 @@ class OrdersController < Default::Controller
                                                 on_validation_determinant_class: determinant_class,
                                                 params_filter: model_class::ORDER_DISHES_PARAMS)
     render(**updater_service.update)
-  end
-
-  def destroy
-    authorize authorizable_instance(:destroy)
-
-    destroy_service = destroy_service_class.new(@model)
-    render(**destroy_service.destroy)
   end
 
   def cancel
@@ -93,14 +69,7 @@ class OrdersController < Default::Controller
 
     update_auth_header
     render json: { error: 'wrong action params' } unless @user
-  end
-
-  def set_order
-    @order = Order.find_by(id: params[:id])
-
-    update_auth_header
-    render json: { error: 'wrong order params' } unless @order
-  end
+  end  
 
   def order_params
     params.require(:order).permit(Order::PARAMS)
