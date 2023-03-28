@@ -8,7 +8,7 @@ module Validations
       included do
         validates :user_id, :restaurant_id, presence: true
         validates_with Orders::Validators::OrderUpdateOnlyEarlierHourBefore, on: :on_dishes_update
-        # validates_with 
+        validates_with Orders::Validators::OrderAlwaysHasReservationValidator
       end
     end
   end
