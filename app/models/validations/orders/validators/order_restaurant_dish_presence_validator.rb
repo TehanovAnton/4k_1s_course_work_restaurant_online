@@ -1,5 +1,5 @@
 module Validations
-  module OrderValidation
+  module Orders
     module Validators
       class OrderRestaurantDishPresenceValidator < ActiveModel::Validator
         MESSAGE = 'Dish is not found in order restaurant'.freeze

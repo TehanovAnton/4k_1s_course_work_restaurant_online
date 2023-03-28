@@ -1,3 +1,5 @@
+# frozen_string_literal:true
+
 module Validations
   module Reservation
     module Validators
@@ -5,7 +7,7 @@ module Validations
         attr_reader :record, :start_at, :end_at, :table
 
         def validate(record)
-          return true unless record.inside?
+          return unless record.inside?
 
           @record = record
           @start_at = record.start_at
@@ -31,7 +33,8 @@ module Validations
 
         def time_not_in_other_reservation?(time)
           condition = table.reservations.none? do |reservation|
-            time.between?(reservation.start_at, reservation.end_at)
+            reservation.id != record.id &&
+              time.between?(reservation.start_at, reservation.end_at)
           end
 
           record.errors.add :base, 'It seems there is another reservation at that time' unless condition
@@ -39,11 +42,12 @@ module Validations
 
         def time_not_cover_other_reservation?
           condition = table.reservations.none? do |reservation|
-            between?(record.start_at, reservation.start_at, reservation.end_at) ||
-              between?(record.end_at, reservation.start_at, reservation.end_at)
+            reservation.id != record.id &&
+              (between?(record.start_at, reservation.start_at, reservation.end_at) ||
+              between?(record.end_at, reservation.start_at, reservation.end_at))
           end
 
-          record.errors.add :base, 'It seems ypur time covers other reservations' unless condition
+          record.errors.add :base, 'It seems your time covers other reservations' unless condition
         end
 
         private

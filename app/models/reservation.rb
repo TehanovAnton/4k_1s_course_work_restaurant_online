@@ -5,14 +5,13 @@ class Reservation < ApplicationRecord
     :table_id,
     :start_at,
     :end_at,
-    :place_type,
-    { order_attributes: %i[restaurant_id user_id] }
+    :place_type
   ].freeze
 
-  include Validations::Reservation::ReservationValidation
+  include Validations::Reservations::Validation
 
   belongs_to :table, optional: true
-  belongs_to :order
+  belongs_to :order, optional: true
 
   enum place_type: %i[inside outside]
 
