@@ -32,4 +32,8 @@ class ApplicationPolicy
   def super_admin?
     user.is_a? SuperAdmin
   end
+
+  def customer?
+    user.is_a? Customer
+  end
 end

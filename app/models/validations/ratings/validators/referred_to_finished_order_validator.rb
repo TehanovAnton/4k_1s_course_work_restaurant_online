@@ -7,8 +7,9 @@ module Validations
         MESSAGE = 'Only finished order can be rated.'
 
         def validate(record)
-          @record = record
+          return true unless record.id
 
+          @record = record
           @record.errors.add(:base, MESSAGE) unless finished_order?
         end
 

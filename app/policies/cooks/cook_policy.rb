@@ -15,7 +15,7 @@ module Cooks
     def refers_to_order_restaurant?
       # I use joind table model because Cook joins by has_one asscociation.
       RestaurantsCook.where(id: record_restaurant&.id)
-                     .joins(:restaurant)
+                     .joins(:restaurant) # useless
                      .ids
                      .include?(user.restaurants_cook.id)
     end
