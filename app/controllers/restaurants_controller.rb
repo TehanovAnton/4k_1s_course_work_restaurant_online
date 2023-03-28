@@ -1,4 +1,4 @@
-class RestaurantsController < DefaultController
+class RestaurantsController < Default::Controller
   before_action :authenticate_user!
   before_action :set_model, only: %i[update
                                      destroy

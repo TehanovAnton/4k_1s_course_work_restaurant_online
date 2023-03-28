@@ -1,9 +1,11 @@
 # frozen_string_literal:true
 
 module Cooks
-  class OrderPolicy < CookPolicy
+  class OrderPolicy < ReferrersPolicy
+    REFERRED_MODEL = Restaurant
+
     def index?
-      cook? && refers_to_order_restaurant?
+      cook? && referres_to_reffered_model?
     end
 
     class Scope < Scope
@@ -14,10 +16,14 @@ module Cooks
 
     private
 
-    def record_restaurant
+    def reffered_record
       return unless record.any?
 
       record.first.restaurant
+    end
+
+    def user_referred_filter
+      { id: user.restaurant.id }
     end
   end
 end

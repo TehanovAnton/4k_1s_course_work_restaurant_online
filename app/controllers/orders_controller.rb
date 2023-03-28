@@ -1,6 +1,6 @@
 # frozen_string_literal:true
 
-class OrdersController < DefaultController
+class OrdersController < Default::Controller
   before_action :authenticate_user!
 
   before_action :set_model, only: %i[update
@@ -89,7 +89,7 @@ class OrdersController < DefaultController
   end
 
   def set_user
-    @user = User.find_by(id: params[:order][:user_id])
+    @user = User.find_by(id: params[:user_id])
 
     update_auth_header
     render json: { error: 'wrong action params' } unless @user

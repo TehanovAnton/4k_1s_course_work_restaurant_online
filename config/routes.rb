@@ -24,6 +24,8 @@ Rails.application.routes.draw do
         post :post_message, to: 'orders#post_message'
         delete :delete_message, to: 'orders#delete_message'
       end
+
+      resources :ratings
     end
 
     resources :reservations

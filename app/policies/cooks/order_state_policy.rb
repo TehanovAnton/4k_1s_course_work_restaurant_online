@@ -1,18 +1,23 @@
 # frozen_string_literal:true
 
 module Cooks
-  class OrderStatePolicy < CookPolicy
+  class OrderStatePolicy < ReferrersPolicy
+    REFERRED_MODEL = Restaurant
+
     def transition?
-      cook? && refers_to_order_restaurant?
+      cook? && referres_to_reffered_model?
     end
 
     private
 
-    def record_restaurant
-      @record_restaurant ||= Restaurant.joins(orders: [:order_state])
-                                       .where("order_states.id = #{record.id}")
-                                       .select(:id)
-                                       .first
+    def reffered_record
+      Restaurant.joins(orders: [:order_state])
+                .where("order_states.id = #{record.id}")
+                .first
+    end
+
+    def user_referred_filter
+      { id: user.restaurant.id }
     end
   end
 end
