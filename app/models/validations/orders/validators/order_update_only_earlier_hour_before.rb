@@ -1,7 +1,7 @@
 # frozen_string_literal:true
 
 module Validations
-  module OrderValidation
+  module Orders
     module Validators
       class OrderUpdateOnlyEarlierHourBefore < ActiveModel::Validator
         attr_reader :old_record

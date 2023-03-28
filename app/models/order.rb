@@ -13,7 +13,7 @@ class Order < ApplicationRecord
   MODEL_CREATER_CLASS = Models::Creaters::Creater
   MODEL_DESTROYER_CLASS = Models::Destroyers::ModelResponseDestroyer
 
-  include Validations::OrderValidation::Validation
+  include Validations::Orders::Validation
 
   has_many :orders_dishes, dependent: :destroy
   has_many :dishes, through: :orders_dishes

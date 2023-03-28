@@ -5,8 +5,7 @@ class Reservation < ApplicationRecord
     :table_id,
     :start_at,
     :end_at,
-    :place_type,
-    { order_attributes: %i[restaurant_id user_id] }
+    :place_type
   ].freeze
 
   include Validations::Reservation::ReservationValidation
