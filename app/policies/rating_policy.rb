@@ -1,12 +1,14 @@
 # frozen-string_literal:true
 
-class RatingPolicy < ApplicationPolicy
+class RatingPolicy < ReferrersPolicy
+  REFERRED_MODEL = Order
+
   def create?
     customer?
   end
 
   def update?
-    customer? && referres_to_order_customer?
+    customer? && referres_to_reffered_model?
   end
 
   def destroy?
@@ -15,13 +17,11 @@ class RatingPolicy < ApplicationPolicy
 
   private
 
-  def record_order
+  def reffered_record
     record.order
   end
 
-  def referres_to_order_customer?
-    Order.where(user_id: user.id)
-         .ids
-         .include?(record_order.id)
+  def user_referred_filter
+    { user_id: user.id }
   end
 end

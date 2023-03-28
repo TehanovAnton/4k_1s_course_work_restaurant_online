@@ -36,4 +36,8 @@ class ApplicationPolicy
   def customer?
     user.is_a? Customer
   end
+
+  def cook?
+    user.is_a? Cook
+  end
 end
