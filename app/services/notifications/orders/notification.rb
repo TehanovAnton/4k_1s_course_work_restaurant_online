@@ -2,19 +2,13 @@
 
 module Notifications
   module Orders
-    class Notification
-      attr_reader :order
-
+    class Notification < Notifications::Base
       MAILER = OrderMailer
 
-      def initialize(order)
-        @order = order
-      end
+      private
 
-      def notify
-        MAILER.with(user: order.user, order:)
-              .order_created
-              .deliver_later
+      def mailer_options
+        { user: model.user, order: model }
       end
     end
   end

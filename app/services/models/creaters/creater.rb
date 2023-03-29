@@ -31,6 +31,8 @@ module Models
           else
             { json: @model.errors.messages, status: :unprocessable_entity }
           end
+
+        self
       end
 
       def model_serializer

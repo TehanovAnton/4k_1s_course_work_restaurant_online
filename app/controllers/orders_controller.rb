@@ -49,6 +49,11 @@ class OrdersController < Notify::Controller
 
   private
 
+  def notify_after_create
+    notify_service_class.new(@model, :order_created)
+                        .notify
+  end
+
   class << self
     def model_class
       Order

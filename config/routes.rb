@@ -1,9 +1,13 @@
+require 'sidekiq/web'
+
 Rails.application.routes.draw do
   mount_devise_token_auth_for 'User', at: 'auth', controllers: {
     registrations: 'overrides/registrations'
   }
 
   mount ActionCable.server => '/cable'
+
+  mount Sidekiq::Web => '/sidekiq'
 
   resources :users, shallow: true do
     resources :orders do

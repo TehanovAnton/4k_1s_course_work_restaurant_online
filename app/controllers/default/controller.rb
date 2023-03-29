@@ -41,9 +41,5 @@ module Default
     def destroy_service_class
       model_class::MODEL_DESTROYER_CLASS
     end
-
-    def notify_service_class
-      model_class::NOTIFIER_CLASS
-    end
   end
 end
