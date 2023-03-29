@@ -1,7 +1,7 @@
 # frozen_string_literal:true
 
 module Validations
-  module Reservation
+  module Reservations
     module Validators
       class InsideReservationTimeValidator < ActiveModel::Validator
         attr_reader :record, :start_at, :end_at, :table

@@ -79,9 +79,9 @@ Rails.application.configure do
   # config.active_job.queue_adapter = :sidekiq
 
   config.action_mailer.delivery_method = :smtp
-  config.action_mailer.smtp_settings = { :address => '127.0.0.1', :port => 1025 }
+  config.action_mailer.smtp_settings = { address: '127.0.0.1', port: 1025 }
   config.action_mailer.raise_delivery_errors = false
-  
+
   config.action_cable.url = 'ws://localhost:3000/cable'
   config.action_cable.disable_request_forgery_protection = true
 end

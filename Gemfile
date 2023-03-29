@@ -26,6 +26,9 @@ gem 'jbuilder', '~> 2.7'
 # Notifications
 gem 'sidekiq'
 
+# cron job for creating notifications jobs
+gem 'whenever', '~> 1.0', require: false
+
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.4', require: false
 

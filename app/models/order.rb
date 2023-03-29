@@ -12,6 +12,7 @@ class Order < ApplicationRecord
   MODEL_UPDATER_CLASS = Models::Updaters::UpdaterWithOnValidation
   MODEL_CREATER_CLASS = Models::Creaters::Creater
   MODEL_DESTROYER_CLASS = Models::Destroyers::ModelResponseDestroyer
+  NOTIFIER_CLASS = Notifications::Orders::Notification
 
   include Validations::Orders::Validation
 
