@@ -11,4 +11,13 @@ class OrderMailer < ApplicationMailer
 
     mail(to: @user.email, subject: 'Thank you for order.')
   end
+
+  def order_remind
+    @user = params[:user]
+    @order = params[:order]
+    @url = 'http://localhost:3000/sign_in'
+    return unless @order
+
+    mail(to: @user.email, subject: 'Thank you for order.')
+  end
 end
