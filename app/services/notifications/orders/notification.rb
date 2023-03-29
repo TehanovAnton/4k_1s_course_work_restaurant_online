@@ -3,17 +3,16 @@
 module Notifications
   module Orders
     class Notification
-      attr_reader :order_mailer_class, :creater
+      attr_reader :order
 
       MAILER = OrderMailer
 
-      def initialize(creater)
-        @creater = creater
+      def initialize(order)
+        @order = order
       end
 
       def notify
-        @creater_response = creater.create
-        MAILER.with(user: creater.model.user, order: creater.model)
+        MAILER.with(user: order.user, order:)
               .order_created
               .deliver_later
       end
