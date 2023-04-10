@@ -11,7 +11,7 @@ module Default
       authorize authorizable_instance(:create)
 
       creater_service = creater_service_class.new(model_class, model_params)
-      render(**creater_service.create)
+      render(**creater_service.create.response)
     end
 
     def update

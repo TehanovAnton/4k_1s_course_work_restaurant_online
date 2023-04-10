@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Dish < ApplicationRecord
-  PARAMS = %i[name menu_id price_cents description].freeze
+  PARAMS = %i[name menu_id price_cents description image].freeze
   MODEL_SERIALIZER_CLASS = DishBlueprint
   MODEL_UPDATER_CLASS = Models::Updaters::Updater
   MODEL_CREATER_CLASS = Models::Creaters::Creater

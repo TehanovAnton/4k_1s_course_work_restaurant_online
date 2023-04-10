@@ -4,12 +4,8 @@ class OrderBlueprint < Blueprinter::Base
 
   fields :created_at, :updated_at, :restaurant_id, :user_id
 
-  association :rating, blueprint: RatingBlueprint
   association :orders_dishes, blueprint: OrdersDishes
-  association :user, blueprint: UserBlueprint
-  association :menus, blueprint: MenuBlueprint
-  association :restaurant, blueprint: RestaurantBlueprint
+  association :dishes, blueprint: DishBlueprint
   association :reservation, blueprint: ReservationBlueprint
   association :table, blueprint: TableBlueprint
-  association :messages, blueprint: MessageBlueprint
 end
