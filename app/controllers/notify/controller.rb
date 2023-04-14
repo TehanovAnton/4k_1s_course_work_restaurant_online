@@ -7,7 +7,8 @@ module Notify
 
       creater_service = creater_service_class.new(model_class, model_params)
       @model = creater_service.create.model
-      notify_after_create
+      notify_after_create if @model.id
+
       render(**creater_service.response)
     end
 

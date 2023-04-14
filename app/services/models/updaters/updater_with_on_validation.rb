@@ -13,19 +13,9 @@ module Models
       end
 
       def update
-        return { json: model.errors.messages, status: :bad_request } unless valid?
+        return { json: model.errors.messages, status: :bad_request } unless model.update(params)
 
-        model.save
         { json: model_serializer.render(model) }
-      end
-
-      private
-
-      def valid?
-        model.assign_attributes(params)
-        return model.valid?(on_validation_determinant.on) if on_validation_determinant.on?
-
-        model.valid?
       end
     end
   end

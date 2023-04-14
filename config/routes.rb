@@ -36,6 +36,7 @@ Rails.application.routes.draw do
 
     collection do
       get :can_create, to: 'users#can_create?'
+      get :show_by_email, to: 'users#show_by_email'
     end
 
     member do

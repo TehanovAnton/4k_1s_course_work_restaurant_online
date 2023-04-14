@@ -16,6 +16,10 @@ class Order < ApplicationRecord
 
   include Validations::Orders::Validation
 
+  after_create do |order|
+    order.order_state = OrderState.new
+  end
+
   has_many :orders_dishes, dependent: :destroy
   has_many :dishes, through: :orders_dishes
 

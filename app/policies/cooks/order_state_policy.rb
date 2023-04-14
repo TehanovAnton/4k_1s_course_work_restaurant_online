@@ -5,7 +5,7 @@ module Cooks
     REFERRED_MODEL = Restaurant
 
     def transition?
-      cook? && referres_to_reffered_model?
+      cook? && referres_to_reffered_model? || record.order.user_id == user.id
     end
 
     private

@@ -12,9 +12,19 @@ class UsersController < ApplicationController
   end
 
   def show
+    return render json: UserBlueprint.render(@user, view: :cook) if @user.is_a? Cook
+
     return render json: UserBlueprint.render(@user)
 
     render json: { error: 'wrong user params' }
+  end
+
+  def show_by_email
+    @user = User.find_by(email: params[:email])
+    return render json: UserBlueprint.render(@user) if @user
+
+    update_auth_header
+    return render json: { error: 'wrong user params' } unless @user
   end
 
   def create
@@ -32,7 +42,7 @@ class UsersController < ApplicationController
 
     response = @user if @user.update(update_params)
 
-    render json: response
+    render json: UserBlueprint.render(@user)
   end
 
   def destroy
@@ -54,7 +64,7 @@ class UsersController < ApplicationController
   end
 
   def update_params
-    params.require(:user).permit(:name, :email)
+    params.require(:user).permit(:name, :email, :type)
   end
 
   def user_params

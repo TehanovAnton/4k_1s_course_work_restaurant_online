@@ -1,5 +1,10 @@
 class Restaurant < ApplicationRecord
-  PARAMS = %i[name email address].freeze
+  PARAMS = [
+    :name,
+    :email,
+    :address,
+    { restaurants_admins_attributes: %i[user_id] }
+  ].freeze
 
   MODEL_SERIALIZER_CLASS = RestaurantBlueprint
   MODEL_UPDATER_CLASS = Models::Updaters::Updater
@@ -19,6 +24,8 @@ class Restaurant < ApplicationRecord
 
   has_many :restaurants_admins, dependent: :destroy
   has_many :admins, through: :restaurants_admins
+
+  accepts_nested_attributes_for :restaurants_admins
 
   has_many :restaurants_cooks, dependent: :destroy
   has_many :cooks, through: :restaurants_cooks

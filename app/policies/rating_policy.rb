@@ -4,7 +4,7 @@ class RatingPolicy < ReferrersPolicy
   REFERRED_MODEL = Order
 
   def create?
-    customer?
+    customer? || super_admin?
   end
 
   def update?
