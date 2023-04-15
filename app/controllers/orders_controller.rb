@@ -37,7 +37,7 @@ class OrdersController < Notify::Controller
                                                 model_class:,
                                                 params: model_params,
                                                 on_validation_determinant_class: determinant_class,
-                                                params_filter: model_class::ORDER_DISHES_PARAMS)
+                                                params_filter: model_class::PARAMS)
     render(**updater_service.update)
   end
 

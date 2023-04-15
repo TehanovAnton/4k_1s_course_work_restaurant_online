@@ -17,6 +17,10 @@ module Transitors
       { json: model_serializer.render(model) }
     end
 
+    def notify_chanel
+      ActionCable.server.broadcast('orders_channel', { order: OrderBlueprint.render(@model.order) })
+    end
+
     private
 
     def run_transit?

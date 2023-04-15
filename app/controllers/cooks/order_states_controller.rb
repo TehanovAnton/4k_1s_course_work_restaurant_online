@@ -12,7 +12,9 @@ module Cooks
       authorize [:cooks, authorizable_instance(:transition)]
 
       transitor = transition_servive_class.new(@model, @transition_name)
-      render(**transitor.transit)
+      transition = transitor.transit
+      transitor.notify_chanel
+      render(**transition)
     end
 
     private

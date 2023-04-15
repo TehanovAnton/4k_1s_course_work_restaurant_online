@@ -30,7 +30,7 @@ module Cooks
     end
 
     def set_collection
-      now = Time.now
+      now = Time.now.utc
       @collection = policy_scope([:cooks, Order.where(restaurant: @restaurant)]).joins(:reservation)
                                                                                 .where('reservations.start_at BETWEEN ? AND ?', now.beginning_of_day, now.end_of_day)
     end
