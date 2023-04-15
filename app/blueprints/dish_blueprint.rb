@@ -16,4 +16,12 @@ class DishBlueprint < Blueprinter::Base
   view :with_menus do
     association :menu, blueprint: MenuBlueprint
   end
+
+  view :search do
+    field :type do |restaurant|
+      restaurant.class.name
+    end
+
+    association :menu, blueprint: MenuBlueprint, view: :search
+  end
 end

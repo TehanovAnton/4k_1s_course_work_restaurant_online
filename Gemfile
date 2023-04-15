@@ -36,6 +36,9 @@ gem 'image_processing', '~> 1.12', '>= 1.12.2'
 
 gem 'money-rails', '~>1.12'
 
+gem 'elasticsearch-model', github: 'elastic/elasticsearch-rails', branch: 'main'
+gem 'elasticsearch-rails', github: 'elastic/elasticsearch-rails', branch: 'main'
+
 group :development, :test do
   gem 'pry', '~> 0.14.1'
   gem 'pry-nav'

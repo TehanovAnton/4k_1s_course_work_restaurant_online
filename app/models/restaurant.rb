@@ -1,3 +1,5 @@
+require 'elasticsearch/model'
+
 class Restaurant < ApplicationRecord
   PARAMS = [
     :name,
@@ -12,6 +14,9 @@ class Restaurant < ApplicationRecord
   MODEL_DESTROYER_CLASS = Models::Destroyers::ModelResponseDestroyer
 
   include Validations::RestaurantValidation
+
+  include Elasticsearch::Model
+  include Elasticsearch::Model::Callbacks
 
   has_many :tables, dependent: :destroy
 
@@ -29,4 +34,73 @@ class Restaurant < ApplicationRecord
 
   has_many :restaurants_cooks, dependent: :destroy
   has_many :cooks, through: :restaurants_cooks
+
+  def settings
+    {
+      index: {
+        analysis: {
+          analyzer: {
+            substring_analyzer: {
+              tokenizer: "edge_ngram_tokenizer",
+              filter: ["lowercase"]
+            }
+          },
+          tokenizer: {
+            edge_ngram_tokenizer: {
+              type: "edge_ngram",
+              min_gram: 1,
+              max_gram: 8,
+              token_chars: ["letter", "digit"]
+            }
+          }
+        }
+      }
+    }
+  end
+
+  def mappings
+    {
+      properties: {
+        name: {
+          type: "text",
+          analyzer: "autocomplete",
+          search_analyzer: "autocomplete_search"
+        }
+      }
+    }
+  end
+
+  def self.create_index!
+    client = __elasticsearch__.client
+    index_name = self.index_name
+
+    # Delete the index if it already exists
+    client.indices.delete(index: index_name) if client.indices.exists?(index: index_name)
+
+    # Create the index with the new settings and mappings
+    client.indices.create(
+      index: index_name,
+      body: {
+        settings: settings.to_hash,
+        mappings: mappings.to_hash
+      }
+    )
+  end
+
+  def self.custom_search(query)
+    search_definition = {
+      query: {
+        query_string: {
+          query: "*#{query.downcase}*",
+          fields: ["name"],
+          default_operator: "AND"
+        }
+      }
+    }
+
+    __elasticsearch__.search(search_definition)
+  end
 end
+
+Restaurant.create_index!
+Restaurant.import

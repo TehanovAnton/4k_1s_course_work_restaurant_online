@@ -1,8 +1,8 @@
 FactoryBot.define do
   factory :restaurant do
-    name {}
-    email {}
-    address { 'st.Avenue-15' }
+    sequence(:name) { |n| "Restaurant #{n}" }
+    sequence(:email) { |n| "restaurant#{n}@example.com" }
+    sequence(:address) { |n| "restaurant-#{n}.v" }
 
     trait :with_tables do
       tables { (1..10).map { |number| association(:table, number: number) } }

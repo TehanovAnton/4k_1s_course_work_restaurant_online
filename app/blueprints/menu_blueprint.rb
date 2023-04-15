@@ -9,4 +9,8 @@ class MenuBlueprint < Blueprinter::Base
   view :with_dishes do
     association :dishes, blueprint: DishBlueprint
   end
+
+  view :search do
+    association :restaurant, blueprint: RestaurantBlueprint, view: :search
+  end
 end
