@@ -9,7 +9,7 @@ class UserBlueprint < Blueprinter::Base
   end
 
   view :admin do
-    association :restaurants_admin, blueprint: RestaurantsAdminBlueprint
-    association :restaurant, blueprint: RestaurantBlueprint
+    association :restaurants_admins, blueprint: RestaurantsAdminsBlueprint
+    association :restaurants, blueprint: RestaurantBlueprint
   end
 end

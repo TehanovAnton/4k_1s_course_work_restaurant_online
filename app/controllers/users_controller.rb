@@ -37,11 +37,9 @@ class UsersController < ApplicationController
     authorize @user, policy_class: UserPolicy
 
     @user = User.find(@user.id) if @user.update(update_params)
-    binding.pry
     @user.update(update_cooks_params) unless update_cooks_params.empty?
 
     unless update_admin_params.empty?
-      @user.restaurants_admin.destroy
       @user.update(update_admin_params)
     end
 
@@ -86,7 +84,7 @@ class UsersController < ApplicationController
   end
 
   def update_admin_params
-    params.require(:user).permit(restaurants_admin_attributes: [:id, :restaurant_id])
+    params.require(:user).permit(restaurants_admins_attributes: [:id, :restaurant_id])
   end
 
   def user_params

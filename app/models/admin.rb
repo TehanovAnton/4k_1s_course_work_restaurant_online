@@ -1,7 +1,7 @@
 
 class Admin < User
-  has_one :restaurants_admin, foreign_key: 'user_id'
-  has_one :restaurant, through: :restaurants_admin
+  has_many :restaurants_admins, foreign_key: 'user_id'
+  has_many :restaurants, through: :restaurants_admins
 
-  accepts_nested_attributes_for :restaurants_admin
+  accepts_nested_attributes_for :restaurants_admins
 end

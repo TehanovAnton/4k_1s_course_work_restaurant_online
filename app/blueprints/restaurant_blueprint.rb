@@ -6,6 +6,7 @@ class RestaurantBlueprint < Blueprinter::Base
   association :tables, blueprint: TableBlueprint
 
   view :normal do
+    association :restaurants_admins, blueprint: RestaurantsAdminsBlueprint
     association :menus, blueprint: MenuBlueprint, view: :with_dishes
   end
 

@@ -1,6 +1,6 @@
 # frozen_string_literal:true
 
-class RestaurantsAdminBlueprint < Blueprinter::Base
+class RestaurantsAdminsBlueprint < Blueprinter::Base
   identifier :id
 
   fields :restaurant_id, :user_id

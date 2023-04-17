@@ -5,11 +5,11 @@ class RestaurantPolicy < ApplicationPolicy
   end
 
   def update?
-    super_admin? || record.admins.ids.include?(user.id)
+    record.admins.ids.include?(user.id)
   end
 
   def destroy?
-    super_admin? || record.admins.ids.include?(user.id)
+    record.admins.ids.include?(user.id)
   end
 
   private
