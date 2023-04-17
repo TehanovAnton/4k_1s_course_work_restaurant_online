@@ -12,16 +12,13 @@ class UsersController < ApplicationController
   end
 
   def show
-    return render json: UserBlueprint.render(@user, view: :cook) if @user.is_a? Cook
-
-    return render json: UserBlueprint.render(@user)
-
-    render json: { error: 'wrong user params' }
+    render json: user_json
   end
 
   def show_by_email
     @user = User.find_by(email: params[:email])
-    return render json: UserBlueprint.render(@user) if @user
+
+    render json: user_json
 
     update_auth_header
     return render json: { error: 'wrong user params' } unless @user
@@ -38,11 +35,17 @@ class UsersController < ApplicationController
 
   def update
     authorize @user, policy_class: UserPolicy
-    response = { error: 'wrong user params' }
 
-    response = @user if @user.update(update_params)
+    @user = User.find(@user.id) if @user.update(update_params)
+    binding.pry
+    @user.update(update_cooks_params) unless update_cooks_params.empty?
 
-    render json: UserBlueprint.render(@user)
+    unless update_admin_params.empty?
+      @user.restaurants_admin.destroy
+      @user.update(update_admin_params)
+    end
+
+    render json: user_json
   end
 
   def destroy
@@ -56,6 +59,17 @@ class UsersController < ApplicationController
 
   private
 
+  def user_json
+    case @user&.class.name
+    when 'Cook'
+      UserBlueprint.render(@user, view: :cook)
+    when 'SuperAdmin', 'Admin'
+      UserBlueprint.render(@user, view: :admin)
+    else
+      UserBlueprint.render(@user)
+    end
+  end
+
   def set_user
     @user = User.find_by(id: params[:id])
 
@@ -65,6 +79,14 @@ class UsersController < ApplicationController
 
   def update_params
     params.require(:user).permit(:name, :email, :type)
+  end
+
+  def update_cooks_params
+    params.require(:user).permit(restaurants_cook_attributes: [:id, :restaurant_id])
+  end
+
+  def update_admin_params
+    params.require(:user).permit(restaurants_admin_attributes: [:id, :restaurant_id])
   end
 
   def user_params
