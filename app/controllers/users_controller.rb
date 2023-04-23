@@ -4,6 +4,7 @@ class UsersController < ApplicationController
   before_action :set_authorizer, only: Authorization::RestaurantsAuthorizationApi::ACTIONS
 
   include Authorization::UsersAuthorizationApi
+  include Authorization::UsersResetPasswordApi
 
   def index
     @users = policy_scope(User)
