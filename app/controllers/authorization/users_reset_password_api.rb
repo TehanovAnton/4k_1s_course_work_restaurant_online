@@ -9,24 +9,29 @@ module Authorization
       before_action :set_reset_password_user, only: %i[reset_password]
 
 
-      def reset_password
+      def reset_password        
         return wrong_params if reset_passwords.values.reduce { |param| param.nil? || param.empty? }
         
-        @reset_password_user.reset_password(reset_passwords[:password], reset_passwords[:password_confirmation])
+        return wrong_params unless @reset_password_user.reset_password(reset_passwords[:password], reset_passwords[:password_confirmation])
+
         render plain: :ok
+      rescue StandardError => e
+        return wrong_params
       end
 
       private
 
       def wrong_params
         update_auth_header
-        render(json: { error: 'wrong params' }, status: :unprocessable_entity)
+        return render(json: { error: 'wrong params' }, status: :unprocessable_entity)
       end
 
       def set_reset_password_user
         @reset_password_user = User.find_by(email: reset_password_params[:email])
 
         wrong_params unless @reset_password_user
+      rescue StandardError => e
+        return wrong_params
       end
 
       def reset_password_params
