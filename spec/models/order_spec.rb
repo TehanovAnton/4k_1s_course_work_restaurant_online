@@ -1,4 +1,5 @@
 require 'rails_helper'
+require './spec/setups/default'
 
 RSpec.describe Order, type: :model do
   describe 'create' do
