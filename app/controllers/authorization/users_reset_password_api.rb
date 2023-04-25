@@ -5,14 +5,11 @@ module Authorization
     extend ActiveSupport::Concern
 
     included do
-      skip_before_action :authenticate_user!, only: %i[reset_password]
-      before_action :set_reset_password_user, only: %i[reset_password]
+      skip_before_action :authenticate_user!, only: %i[send_reset_password]
+      before_action :set_reset_password_user, only: %i[send_reset_password]
 
-
-      def reset_password        
-        return wrong_params if reset_passwords.values.reduce { |param| param.nil? || param.empty? }
-        
-        return wrong_params unless @reset_password_user.reset_password(reset_passwords[:password], reset_passwords[:password_confirmation])
+      def send_reset_password
+        @reset_password_user.send_reset_password_instructions
 
         render plain: :ok
       rescue StandardError => e
@@ -35,12 +32,8 @@ module Authorization
       end
 
       def reset_password_params
-        permit_params = [:email, passwords: %i[password password_confirmation]]
+        permit_params = [:email]
         params.require(:reset_password).permit(permit_params)
-      end
-
-      def reset_passwords
-        reset_password_params[:passwords]
       end
     end
   end

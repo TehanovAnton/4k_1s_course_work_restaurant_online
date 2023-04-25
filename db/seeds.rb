@@ -4,6 +4,6 @@ customer = FactoryBot.create(:user, tr_type: 'Customer')
 cook = FactoryBot.create(:user, tr_type: 'Cook')
 
 restaurant = FactoryBot.create(:restaurant, :with_tables)
-restaurant.admins << admin
+restaurant.admins << [admin, super_admin]
 
 menu = FactoryBot.create(:menu, :breakfast, restaurant: restaurant)
