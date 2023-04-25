@@ -18,7 +18,9 @@ module Transitors
     end
 
     def notify_chanel
-      ActionCable.server.broadcast('orders_channel', { order: OrderBlueprint.render(@model.order) })
+      order_json = OrderBlueprint.render(@model.order)
+      ActionCable.server.broadcast('cooks_orders_channel', { order: order_json })
+      ActionCable.server.broadcast('customers_orders_channel', { order: order_json })
     end
 
     private

@@ -37,6 +37,7 @@ Rails.application.routes.draw do
     collection do
       get :can_create, to: 'users#can_create?'
       get :show_by_email, to: 'users#show_by_email'
+      get :send_reset_password, to: 'users#send_reset_password'
     end
 
     member do

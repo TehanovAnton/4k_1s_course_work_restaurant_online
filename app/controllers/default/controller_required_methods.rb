@@ -23,7 +23,7 @@ module Default
         @model = model_class.find_by(id: params[:id])
 
         update_auth_header
-        render json: { error: 'wrong menu params' } unless @model
+        render(json: { error: 'wrong menu params' }, status: :unprocessable_entity) unless @model
       end
     end
 
