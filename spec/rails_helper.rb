@@ -1,5 +1,6 @@
 # This file is copied to spec/ when you run 'rails generate rspec:install'
 require 'spec_helper'
+# require_relative 'shared_examples'
 ENV['RAILS_ENV'] ||= 'test'
 require_relative '../config/environment'
 require './spec/support/factory_bot'
