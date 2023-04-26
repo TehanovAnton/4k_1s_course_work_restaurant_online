@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_04_15_203123) do
+ActiveRecord::Schema.define(version: 2023_04_25_193443) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -41,6 +41,14 @@ ActiveRecord::Schema.define(version: 2023_04_15_203123) do
     t.bigint "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
+  end
+
+  create_table "cook_user_bindings", force: :cascade do |t|
+    t.bigint "cook_id", null: false
+    t.bigint "user_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_cook_user_bindings_on_user_id"
   end
 
   create_table "dishes", force: :cascade do |t|
@@ -185,6 +193,8 @@ ActiveRecord::Schema.define(version: 2023_04_15_203123) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "cook_user_bindings", "users"
+  add_foreign_key "cook_user_bindings", "users", column: "cook_id"
   add_foreign_key "dishes", "menus"
   add_foreign_key "menus", "restaurants"
   add_foreign_key "messages", "restaurants"
