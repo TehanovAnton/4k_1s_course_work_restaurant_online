@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_user, only: %i[update destroy show can_update? can_destroy?]
+  before_action :set_user, only: %i[update destroy create_cook show can_update? can_destroy?]
   before_action :set_authorizer, only: Authorization::RestaurantsAuthorizationApi::ACTIONS
 
   include Authorization::UsersAuthorizationApi
@@ -18,11 +18,18 @@ class UsersController < ApplicationController
 
   def show_by_email
     @user = User.find_by(email: params[:email])
+    return wrong_params unless @user
 
     render json: user_json
 
     update_auth_header
     return render json: { error: 'wrong user params' } unless @user
+  end
+
+  def create_cook
+    create_service = Models::Creaters::CookCreater.new(user_params)
+    create_service.create
+    render(**create_service.response)
   end
 
   def create
@@ -58,6 +65,11 @@ class UsersController < ApplicationController
 
   private
 
+  def wrong_params
+    update_auth_header
+    return render(json: { error: 'wrong params' }, status: :unprocessable_entity)
+  end
+
   def user_json
     case @user&.class.name
     when 'Cook'
@@ -89,6 +101,13 @@ class UsersController < ApplicationController
   end
 
   def user_params
-    params.require(:user).permit(:name, :email, :password, :password_confirmation, :type)
+    params.require(:user).permit(
+      :name, 
+      :email, 
+      :password, 
+      :password_confirmation, 
+      :type,
+      cook_user_binding_attributes: [:user_id]
+    )
   end
 end

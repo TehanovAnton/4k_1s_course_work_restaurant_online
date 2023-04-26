@@ -9,8 +9,6 @@ module Models
       def create
         super
 
-        binding.pry
-
         if @model.id
           MAILER.with(user: @model)
                 .account_created
