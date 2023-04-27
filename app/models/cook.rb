@@ -18,6 +18,10 @@ class Cook < User
   has_one :cook_user_binding, dependent: :destroy
   has_one :user, through: :cook_user_binding
 
+  validates_presence_of :cook_user_binding, message: proc {
+    "Could not create cook without user binding"
+  }
+
   accepts_nested_attributes_for :restaurants_cook
   accepts_nested_attributes_for :cook_user_binding
 end

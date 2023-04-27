@@ -30,6 +30,8 @@ class UsersController < ApplicationController
     create_service = Models::Creaters::CookCreater.new(user_params)
     create_service.create
     render(**create_service.response)
+  rescue StandardError => e
+    wrong_params
   end
 
   def create
