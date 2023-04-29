@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <p>
+      Hello, your working account successfully created.
+      It is bind with your user account (with email: <%= @cook.user.email%>).
+      Reset your wotking account password to start work.
+      Reset password instructions would be sent to the bind user emal. 
+    </p>
+    <p>
+      To send reset password instructions, just follow this link: <%= link_to 'instructions', @url %>.
+    </p>
+    <p>Thanks for joining and have a great day!</p>
+  </body>
+</html>

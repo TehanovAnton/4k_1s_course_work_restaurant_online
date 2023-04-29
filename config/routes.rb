@@ -41,6 +41,7 @@ Rails.application.routes.draw do
     end
 
     member do
+      post :create_cook, to: 'users#create_cook'
       get :can_update, to: 'users#can_update?'
       get :can_destroy, to: 'users#can_destroy?'
     end
