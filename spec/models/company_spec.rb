@@ -72,6 +72,12 @@ RSpec.describe Company, type: :model do
 
       include_examples 'valid company'
 
+      it 'will belnogs to super admin' do
+        company.save
+        super_admin_company = SuperAdmin.find(super_admin.id).company
+        expect(super_admin_company.id).to be(company.id)
+      end
+
       context 'with nested attributes' do
         let(:company) do
           FactoryBot.build(:company, :admin_nested_attributes)
