@@ -18,6 +18,10 @@ module Validations
       }
 
       validates :email, format: Devise.email_regexp
+
+      validates_presence_of :companies_restaurant, message: proc {
+        "is missing"
+      }
     end
   end
 end
