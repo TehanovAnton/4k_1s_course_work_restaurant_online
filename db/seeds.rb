@@ -1,5 +1,5 @@
 # Users
-super_admin = FactoryBot.create(:user, tr_type: 'SuperAdmin')
+super_admin = FactoryBot.create(:user, tr_type: 'SuperAdmin', name: 'anton')
 admin = FactoryBot.create(:user, tr_type: 'Admin')
 customer = FactoryBot.create(:user, tr_type: 'Customer')
 cook = FactoryBot.create(:user, tr_type: 'Cook')

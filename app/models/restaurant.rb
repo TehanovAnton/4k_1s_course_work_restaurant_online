@@ -30,10 +30,14 @@ class Restaurant < ApplicationRecord
   has_many :restaurants_admins, dependent: :destroy
   has_many :admins, through: :restaurants_admins
 
-  accepts_nested_attributes_for :restaurants_admins
-
   has_many :restaurants_cooks, dependent: :destroy
   has_many :cooks, through: :restaurants_cooks
+
+  has_one :companies_restaurant, dependent: :destroy
+  has_one :company, through: :companies_restaurant
+
+  accepts_nested_attributes_for :restaurants_admins
+  accepts_nested_attributes_for :companies_restaurant
 
   def settings
     {

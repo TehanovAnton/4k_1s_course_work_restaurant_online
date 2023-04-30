@@ -2,8 +2,8 @@ class Company < ApplicationRecord
   has_one :super_admins_company, dependent: :destroy
   has_one :super_admin, through: :super_admins_company, dependent: :destroy
 
-  # has_many :companies_restaurants
-  # has_many :restaurants, through: :companies_restaurants, dependent: :destroy
+  has_many :companies_restaurants, dependent: :destroy
+  has_many :restaurants, through: :companies_restaurants, dependent: :destroy
 
   validates_presence_of :super_admins_company, message: proc {
     "Could not create company without user binding"
