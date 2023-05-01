@@ -10,7 +10,7 @@ module Setups
     included do
       # let!(:customer) { FactoryBot.create(:user, tr_type: 'Customer') }
       include Setups::Users::CustomersSetup
-      include Setups::Restaurants::ResturantsSetup
+      include Setups::Restaurants::RestaurantsSetup
 
       let!(:avenue_menu) { FactoryBot.create(:menu, :breakfast, restaurant: avenue_restaurant) }
       let!(:bergamo_menu) { FactoryBot.create(:menu, :breakfast, restaurant: bergamo_restaurant) }

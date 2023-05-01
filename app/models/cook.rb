@@ -22,6 +22,10 @@ class Cook < User
     "Could not create cook without user binding"
   }
 
+  validates_presence_of :restaurants_cook, message: proc {
+    "Cook restaurant is not specified"
+  }
+
   accepts_nested_attributes_for :restaurants_cook
   accepts_nested_attributes_for :cook_user_binding
 end

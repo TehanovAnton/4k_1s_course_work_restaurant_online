@@ -41,7 +41,6 @@ Rails.application.routes.draw do
     end
 
     member do
-      post :create_cook, to: 'users#create_cook'
       get :can_update, to: 'users#can_update?'
       get :can_destroy, to: 'users#can_destroy?'
     end
@@ -94,5 +93,14 @@ Rails.application.routes.draw do
     end
 
     put 'order_states/:id/transition', to: 'order_states#transition'
+  end
+
+  namespace 'restaurants_teams' do
+    resources :restaurants, only: [] do
+      member do
+        get :team, to: 'restaurants_teams#team'
+        post :create_cook, to: 'restaurants_teams#create_cook'
+      end
+    end
   end
 end

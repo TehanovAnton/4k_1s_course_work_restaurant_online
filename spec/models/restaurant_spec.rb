@@ -18,7 +18,7 @@ RSpec.describe Restaurant, type: :model do
         end
 
         include_examples 'invalid restaurant'
-        include_examples 'inlcude error message', [:"companies_restaurant.company", ["is missing"]]
+        include_examples 'model inlcude error message', [:"companies_restaurant.company", ["is missing"]]
       end
 
       context 'correct params' do

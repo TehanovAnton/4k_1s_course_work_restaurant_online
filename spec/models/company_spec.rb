@@ -29,7 +29,7 @@ RSpec.describe Company, type: :model do
         end
   
         include_examples 'invalid company'
-        include_examples 'inlcude error message', [:"super_admins_company.super_admin", ["is missing"]]
+        include_examples 'model inlcude error message', [:"super_admins_company.super_admin", ["is missing"]]
       end
 
       context 'no name' do
@@ -38,7 +38,7 @@ RSpec.describe Company, type: :model do
         end
   
         include_examples 'invalid company'
-        include_examples 'inlcude error message', [:"name", ["Could not create Company without Name"]]
+        include_examples 'model inlcude error message', [:"name", ["Could not create Company without Name"]]
       end
       
       context 'no email' do
@@ -47,7 +47,7 @@ RSpec.describe Company, type: :model do
         end
   
         include_examples 'invalid company'
-        include_examples 'inlcude error message', [:"email", ["Could not create Company without Email"]]
+        include_examples 'model inlcude error message', [:"email", ["Could not create Company without Email"]]
       end
 
       context 'trying add new company super_admin' do
@@ -61,7 +61,7 @@ RSpec.describe Company, type: :model do
         end
   
         include_examples 'invalid model'
-        include_examples 'inlcude error message', [:"user_id", ["Company can have only one super admin account."]]
+        include_examples 'model inlcude error message', [:"user_id", ["Company can have only one super admin account."]]
       end
     end
 

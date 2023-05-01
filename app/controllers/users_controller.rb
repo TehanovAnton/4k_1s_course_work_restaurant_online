@@ -26,14 +26,6 @@ class UsersController < ApplicationController
     return render json: { error: 'wrong user params' } unless @user
   end
 
-  def create_cook
-    create_service = Models::Creaters::CookCreater.new(user_params)
-    create_service.create
-    render(**create_service.response)
-  rescue StandardError => e
-    wrong_params
-  end
-
   def create
     authorize User
 
@@ -103,13 +95,6 @@ class UsersController < ApplicationController
   end
 
   def user_params
-    params.require(:user).permit(
-      :name, 
-      :email, 
-      :password, 
-      :password_confirmation, 
-      :type,
-      cook_user_binding_attributes: [:user_id]
-    )
+    User::PARAMS
   end
 end
