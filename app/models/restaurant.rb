@@ -5,7 +5,8 @@ class Restaurant < ApplicationRecord
     :name,
     :email,
     :address,
-    { restaurants_admins_attributes: %i[user_id] }
+    { restaurants_admins_attributes: %i[user_id] },
+    { restaurants_cooks_attributes: %i[id user_id restaurant_id _destroy] }
   ].freeze
 
   MODEL_SERIALIZER_CLASS = RestaurantBlueprint
@@ -35,9 +36,15 @@ class Restaurant < ApplicationRecord
 
   has_one :companies_restaurant, dependent: :destroy
   has_one :company, through: :companies_restaurant
+  has_one :super_admin, through: :company 
 
   accepts_nested_attributes_for :restaurants_admins
+  accepts_nested_attributes_for :restaurants_cooks, allow_destroy: true
   accepts_nested_attributes_for :companies_restaurant
+
+  def all_admins
+    admins + [super_admin]
+  end
 
   def settings
     {
