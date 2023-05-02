@@ -6,6 +6,8 @@ module Setups
       extend ActiveSupport::Concern
 
       included do
+        include Setups::Users::SuperAdminsSetup
+
         let!(:company) { FactoryBot.create(:company) }
       end
     end

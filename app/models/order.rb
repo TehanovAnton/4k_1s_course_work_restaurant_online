@@ -34,6 +34,8 @@ class Order < ApplicationRecord
   belongs_to :restaurant
   belongs_to :user
 
+  delegate :outside?, to: :reservation, allow_nil: true
+
   accepts_nested_attributes_for :reservation
   accepts_nested_attributes_for :orders_dishes
 

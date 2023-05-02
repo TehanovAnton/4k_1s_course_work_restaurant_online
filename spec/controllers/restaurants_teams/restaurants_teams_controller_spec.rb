@@ -5,8 +5,6 @@ RSpec.describe RestaurantsTeams::RestaurantsTeamsController, type: :controller d
   describe 'team' do
     include Setups::Users::CustomersSetup
     include Setups::Users::CooksSetup
-    include Setups::Users::SuperAdminsSetup
-    include Setups::Companies::CompaniesSetup
     include Setups::Restaurants::RestaurantsSetup
     include SpecHelpers::ApiAuthenticationHelpers
 
@@ -34,8 +32,6 @@ RSpec.describe RestaurantsTeams::RestaurantsTeamsController, type: :controller d
 
   describe 'create_cook' do
     include Setups::Users::CustomersSetup
-    include Setups::Users::SuperAdminsSetup
-    include Setups::Companies::CompaniesSetup
     include Setups::Restaurants::RestaurantsSetup
     include SpecHelpers::ApiAuthenticationHelpers
 

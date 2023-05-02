@@ -2,14 +2,16 @@
 
 module Setups
   module Restaurants
-    module RestaurantsSetup
+    module RestaurantWithMenusSetup
       extend ActiveSupport::Concern
 
       included do
         include Setups::Companies::CompaniesSetup
 
         let!(:restaurant) do
-          FactoryBot.create(:restaurnat_with_tables, name: 'Avenue')
+          restaurant = FactoryBot.build(:restaurnat_with_menus)
+          restaurant.save
+          restaurant
         end
       end
     end

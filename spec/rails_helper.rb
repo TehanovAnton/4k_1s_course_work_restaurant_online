@@ -17,7 +17,8 @@ require './spec/setups/users/customers_setup'
 require './spec/setups/users/cooks_setup'
 require './spec/setups/users/super_admins_setup'
 require './spec/setups/companies/companies_setup'
-require './spec/setups/restaurants/restaurants_setup'
+Dir["./spec/setups/restaurants/*.rb"].each { |file| require file }
+Dir["./spec/setups/orders/*.rb"].each { |file| require file }
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are

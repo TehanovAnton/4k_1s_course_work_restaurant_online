@@ -4,10 +4,14 @@ module Validations
       extend ActiveSupport::Concern
 
       included do
-        validates :name, :menu, :price_cents, presence: {
+        validates :name, :price_cents, presence: {
           message: lambda do |_, data|
             "Could not create #{data[:model]} without #{data[:attribute]}"
           end
+        }
+
+        validates_presence_of :menu, message: proc {
+          "Could not create dish without menu."
         }
 
         validates_with DishValidation::Validators::MenuDishNameUniqnessValidator

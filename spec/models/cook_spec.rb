@@ -25,9 +25,7 @@ RSpec.describe Cook, type: :model do
   end
 
   describe 'valid cook' do
-    include Setups::Users::SuperAdminsSetup
     include Setups::Users::CustomersSetup
-    include Setups::Companies::CompaniesSetup
     include Setups::Restaurants::RestaurantsSetup
 
     let(:cook) do

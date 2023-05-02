@@ -34,3 +34,12 @@ RSpec.shared_examples 'model inlcude error message' do |error_message|
     expect(model.errors.messages.any?(error_message)).to be(true)
   end
 end
+
+RSpec.shared_examples 'model nil property will cause error' do |factory, property, error_message|
+  let(:model) do
+    FactoryBot.build(factory, property => nil)
+  end
+
+  include_examples 'invalid model'
+  include_examples 'model inlcude error message', error_message
+end

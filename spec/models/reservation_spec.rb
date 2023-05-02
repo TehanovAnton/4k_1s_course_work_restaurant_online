@@ -2,8 +2,6 @@ require 'rails_helper'
 
 RSpec.describe Reservation, type: :model do
   describe 'create' do
-    include Setups::Default
-
     let(:order) do
       dishes = []
       avenue_menu.dishes.each do |dish|

@@ -8,7 +8,6 @@ end
 
 RSpec.describe Restaurant, type: :model do
   describe 'create' do
-    include Setups::Users::SuperAdminsSetup
     include Setups::Companies::CompaniesSetup
 
     context 'wrong params' do
