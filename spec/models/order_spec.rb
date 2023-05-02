@@ -8,6 +8,14 @@ RSpec.shared_examples 'invalid order' do
   include_examples 'invalid model'
 end
 
+RSpec.shared_examples 'valid order' do
+  let(:model) do
+    order
+  end
+
+  include_examples 'valid model'
+end
+
 RSpec.shared_examples 'order inlcude error message' do |error_message|
   let(:model) do
     order
@@ -41,6 +49,22 @@ RSpec.describe Order, type: :model do
 
       context 'without user' do
         include_examples 'model nil property will cause error', :outside_order, :user, [:user, ["Could not create order without user.", "must exist"]]    
+      end
+    end
+
+    context 'correct params' do
+      let(:order) do
+        FactoryBot.build(:outside_order)
+      end
+
+      include_examples 'valid order'
+
+      it 'will have required association' do
+        order.save
+
+        %i[user restaurant reservation dishes].each do |property|
+          expect(order.method(property).call).to be
+        end
       end
     end
   end
