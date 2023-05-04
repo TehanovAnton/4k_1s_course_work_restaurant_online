@@ -9,7 +9,7 @@ module Setups
         include Setups::Companies::CompaniesSetup
 
         let!(:restaurant) do
-          restaurant = FactoryBot.build(:restaurnat_with_menus)
+          restaurant = FactoryBot.build(:restaurnat_with_menus, :with_tables)
           restaurant.save
           restaurant
         end

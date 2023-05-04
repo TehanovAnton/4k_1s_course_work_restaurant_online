@@ -16,7 +16,7 @@ end
 
 RSpec.shared_examples 'invalid model' do 
   it 'will not create invlaid record' do
-    model.save
+    model.save    
     expect(model).not_to be_valid
   end
 end

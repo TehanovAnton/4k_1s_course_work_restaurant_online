@@ -7,12 +7,15 @@ module Validations
         attr_reader :record, :start_at, :end_at, :table
 
         def validate(record)
-          return unless record.inside?
+          return unless record.inside? &&
+                        record.table &&
+                        record.start_at &&
+                        record.end_at
 
           @record = record
           @start_at = record.start_at
           @end_at = record.end_at
-          @table = record.table
+          @table = record.table.reload
 
           start_earlier_than_end?
           start_earlier_than_now?
