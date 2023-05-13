@@ -8,6 +8,7 @@ class OrderBlueprint < Blueprinter::Base
     order.dishes.map { |d| { dish_id: d.id } }
   end
 
+  association :restaurant, blueprint: RestaurantBlueprint, view: :order
   association :orders_dishes, blueprint: OrdersDishes
   association :dishes, blueprint: DishBlueprint
   association :reservation, blueprint: ReservationBlueprint

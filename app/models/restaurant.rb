@@ -6,7 +6,8 @@ class Restaurant < ApplicationRecord
     :email,
     :address,
     { restaurants_admins_attributes: %i[user_id] },
-    { restaurants_cooks_attributes: %i[id user_id restaurant_id _destroy] }
+    { restaurants_cooks_attributes: %i[id user_id restaurant_id _destroy] },
+    { companies_restaurant_attributes: %i[id company_id user_id] }
   ].freeze
 
   MODEL_SERIALIZER_CLASS = RestaurantBlueprint

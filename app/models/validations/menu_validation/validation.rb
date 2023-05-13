@@ -10,6 +10,11 @@ module Validations
           end
         }
 
+        validates :name, length: {
+          within: (2..255),
+          message: "Wrong name length."
+        }
+
         validates_with MenuValidation::Validators::RestaurantMenuNameUniqnessValidator
       end
     end

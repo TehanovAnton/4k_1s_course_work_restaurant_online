@@ -6,7 +6,9 @@ module Validations
       extend ActiveSupport::Concern
 
       included do
-        validates :start_at, presence: true
+        validates :start_at, presence: {
+          message: 'Could not create order withou start time.'
+        }
 
         with_options if: :inside? do |order|
           order.validates :end_at, presence: true

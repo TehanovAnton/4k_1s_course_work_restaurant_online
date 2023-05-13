@@ -15,6 +15,10 @@ class RestaurantBlueprint < Blueprinter::Base
       restaurant.class.name
     end
 
-    association :menus, blueprint: MenuBlueprint
+    association :menus, blueprint: MenuBlueprint, view: :with_dishes
+  end
+
+  view :order do |restaurant|
+    fields :name, :email, :address
   end
 end
