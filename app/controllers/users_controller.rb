@@ -68,8 +68,10 @@ class UsersController < ApplicationController
     case @user&.class.name
     when 'Cook'
       UserBlueprint.render(@user, view: :cook)
-    when 'SuperAdmin', 'Admin'
+    when 'Admin'
       UserBlueprint.render(@user, view: :admin)
+    when 'SuperAdmin'
+      UserBlueprint.render(@user, view: :super_admin)
     else
       UserBlueprint.render(@user)
     end

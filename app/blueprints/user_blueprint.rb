@@ -12,4 +12,10 @@ class UserBlueprint < Blueprinter::Base
     association :restaurants_admins, blueprint: RestaurantsAdminsBlueprint
     association :restaurants, blueprint: RestaurantBlueprint
   end
+
+  view :super_admin do
+    field :company_id do |super_admin|
+      super_admin.company.id
+    end
+  end
 end

@@ -9,6 +9,12 @@ class User < ApplicationRecord
     restaurants_cook_attributes: [:restaurant_id]
   ]
 
+  validates :name, :email, presence: {
+    message: lambda do |_, data|
+      "Could not create #{data[:model]} without #{data[:attribute]}"
+    end
+  }
+
   # Include default devise modules.
   devise :database_authenticatable, :registerable,
           :recoverable, :rememberable, :trackable, :validatable
