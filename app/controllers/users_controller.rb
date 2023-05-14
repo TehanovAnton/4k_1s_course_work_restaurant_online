@@ -38,14 +38,8 @@ class UsersController < ApplicationController
   def update
     authorize @user, policy_class: UserPolicy
 
-    @user = User.find(@user.id) if @user.update(update_params)
-    @user.update(update_cooks_params) unless update_cooks_params.empty?
-
-    unless update_admin_params.empty?
-      @user.update(update_admin_params)
-    end
-
-    render json: user_json
+    updater = Models::Updaters::UserUpdater.new('User', update_params)
+    render(**updater.update(@user, lambda { user_json }))
   end
 
   def destroy

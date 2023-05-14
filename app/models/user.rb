@@ -11,7 +11,7 @@ class User < ApplicationRecord
 
   validates :name, :email, presence: {
     message: lambda do |_, data|
-      "Could not create #{data[:model]} without #{data[:attribute]}"
+      "#{data[:model]} should have #{data[:attribute]}"
     end
   }
 
