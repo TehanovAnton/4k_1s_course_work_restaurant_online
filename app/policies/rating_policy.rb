@@ -12,7 +12,7 @@ class RatingPolicy < ReferrersPolicy
   end
 
   def destroy?
-    customer? && referres_to_reffered_model?
+    referres_to_reffered_model?
   end
 
   private

@@ -4,13 +4,13 @@
     <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
   </head>
   <body>
-    <h1>Welcome to example.com, <%= @user.name %></h1>
+    <h1>Welcome to Food Place Onliner, <%= @user.name %></h1>
     <p>
       You have successfully created order,
-      your order begins in: <%= @order.reservation.start_at %>.<br>
+      your order begins in <%= @order.reservation.start_at.strftime('%B %e %Y at %H:%M') %>.<br>
     </p>
     <p>
-      To login to the site, just follow this link: <%= @url %>.
+      To login to the site, just follow the <%= link_to 'link', @url %>.
     </p>
     <p>Thanks for joining and have a great day!</p>
   </body>
