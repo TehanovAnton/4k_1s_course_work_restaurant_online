@@ -15,7 +15,7 @@ class UserBlueprint < Blueprinter::Base
 
   view :super_admin do
     field :company_id do |super_admin|
-      super_admin.company.id
+      super_admin.company.id if super_admin.company
     end
   end
 end

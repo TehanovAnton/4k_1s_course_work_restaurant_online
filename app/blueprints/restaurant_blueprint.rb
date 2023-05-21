@@ -4,6 +4,11 @@ class RestaurantBlueprint < Blueprinter::Base
 
   fields :name, :email, :address
   association :tables, blueprint: TableBlueprint
+  association :company, blueprint: CompanyBlueprint
+  
+  field :company_id do |restaurant|
+    restaurant.class.name
+  end
 
   view :normal do
     association :restaurants_admins, blueprint: RestaurantsAdminsBlueprint
