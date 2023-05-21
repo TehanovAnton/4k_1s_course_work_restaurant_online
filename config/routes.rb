@@ -87,6 +87,9 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :companies, only: [:create, :update] do
+  end
+
   namespace :cooks do
     resources :restaurants, only: [] do
       resources :orders, only: [:index]

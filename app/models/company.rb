@@ -1,4 +1,13 @@
 class Company < ApplicationRecord
+  PARAMS = [
+    :name,
+    :email,
+    super_admins_company_attributes: %i[user_id]
+  ].freeze
+  MODEL_SERIALIZER_CLASS = CompanyBlueprint
+  MODEL_UPDATER_CLASS = Models::Updaters::Updater
+  MODEL_CREATER_CLASS = Models::Creaters::Creater
+
   has_one :super_admins_company, dependent: :destroy
   has_one :super_admin, through: :super_admins_company, dependent: :destroy
 
