@@ -17,5 +17,7 @@ class UserBlueprint < Blueprinter::Base
     field :company_id do |super_admin|
       super_admin.company.id if super_admin.company
     end
+
+    association :company, blueprint: CompanyBlueprint
   end
 end
