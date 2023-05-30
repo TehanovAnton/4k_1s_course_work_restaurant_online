@@ -1,5 +1,5 @@
 default: &default
-  host: <%= ENV['DB_HOST'] %>
+  host: <%= ENV['DATABASE_URL'] %>
   username: <%= ENV['DB_USER'] %>
   password: <%= ENV['DB_USER_PASSWORD'] %>
   adapter: postgresql
