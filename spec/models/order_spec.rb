@@ -84,6 +84,18 @@ RSpec.describe Order, type: :model do
       context 'without start_at' do
         include_examples 'order reservation nil property will cause error', :start_at, [:"reservation.start_at", ["can't be blank"]]
       end
+
+      context 'wrong start_at' do
+        let(:order) do          
+          FactoryBot.build(
+            :outside_order,
+            reservation: FactoryBot.build(:outside_reservation, start_at: DateTime.now - 1.hours)
+          )
+        end
+
+        include_examples 'invalid order'
+        include_examples 'order inlcude error message', [:"reservation.start_at", ["wrong start time"]]
+      end
     end
 
     context 'correct params' do

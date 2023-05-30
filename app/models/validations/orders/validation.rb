@@ -6,8 +6,7 @@ module Validations
       extend ActiveSupport::Concern
 
       included do
-        validates_with Orders::Validators::OrderUpdateOnlyEarlierHourBefore, on: :on_dishes_update
-        # validates_with Orders::Validators::OrderAlwaysHasReservationValidator
+        validates_with Orders::Validators::OrderUpdateOnlyEarlierHourBefore, on: :on_dishes_update        
 
         validates_presence_of :reservation, message: proc {
           "Could not create order without reservation."

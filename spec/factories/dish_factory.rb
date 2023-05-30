@@ -4,6 +4,8 @@ FactoryBot.define do
       "Dish_#{n}"
     end
 
+    description { 'any text' }
+
     menu_id { Menu.last&.id }
   end
 end

@@ -10,6 +10,8 @@ module Validations
           message: 'Could not create order withou start time.'
         }
 
+        validate :start_at_greater_than_now
+
         with_options if: :inside? do |order|
           order.validates :end_at, presence: true
 
@@ -19,6 +21,12 @@ module Validations
         end
 
         validates_with Validators::InsideReservationTimeValidator
+
+        private
+
+        def start_at_greater_than_now
+          errors.add(:start_at, "wrong start time") if start_at < DateTime.now
+        end
       end
     end
   end
