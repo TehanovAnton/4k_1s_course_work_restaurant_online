@@ -2,7 +2,7 @@
 super_admin = FactoryBot.create(:user, tr_type: 'SuperAdmin', name: 'anton')
 admin = FactoryBot.create(:user, tr_type: 'Admin')
 customer = FactoryBot.create(:user, tr_type: 'Customer')
-cook = FactoryBot.create(:user, tr_type: 'Cook')
+cook = FactoryBot.create(:cook)
 
 # Companies
 company = FactoryBot.create(:company)
@@ -11,4 +11,6 @@ company = FactoryBot.create(:company)
 restaurant = FactoryBot.create(:restaurant, :with_tables)
 restaurant.admins << [admin, super_admin]
 
-menu = FactoryBot.create(:menu, :breakfast, restaurant: restaurant)
+# Menus
+menu = FactoryBot.build(:menu_with_dishes, restaurant_id: restaurant.id)
+menu.save
