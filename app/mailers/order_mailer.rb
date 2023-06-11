@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class OrderMailer < ApplicationMailer
-  default from: 'tehanovanton@gmail.com'
 
   def order_created
     @user = params[:user]

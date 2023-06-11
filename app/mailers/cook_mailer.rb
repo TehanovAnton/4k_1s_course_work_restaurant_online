@@ -1,6 +1,4 @@
 class CookMailer < ApplicationMailer
-  default from: 'tehanovanton@gmail.com'
-
   def account_created
     @cook = params[:user]
     return unless @cook.user
