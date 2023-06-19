@@ -9,7 +9,7 @@ FactoryBot.define do
     end
 
     sequence :email do
-      "#{name}_company@gmail.com"
+      "#{name}@gmail.com"
     end
 
     password { 'ewqqwe' }
@@ -27,7 +27,7 @@ FactoryBot.define do
     end
 
     sequence :email do
-      "#{name}_company@gmail.com"
+      "#{name}@gmail.com"
     end
 
     password { 'ewqqwe' }
